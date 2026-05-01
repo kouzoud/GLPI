@@ -1,0 +1,321 @@
+/* ============================================================
+   SUPER-ADMIN — Profil ID: 4
+   Style : Corporate Moderne — Linear/Notion/Vercel inspired
+   ============================================================ */
+
+/* === PALETTE IMPOSÉE === */
+:root {
+    --sa-sidebar-bg    : #0f172a;
+    --sa-sidebar-hover : rgba(59,130,246,0.10);
+    --sa-accent        : #3b82f6;
+    --sa-accent-light  : #eff6ff;
+    --sa-navbar-bg     : #1e293b;
+    --sa-content-bg    : #f8fafc;
+    --sa-card-bg       : #ffffff;
+    --sa-border        : #e2e8f0;
+    --sa-text          : #1e293b;
+    --sa-muted         : #64748b;
+    --sa-success       : #10b981;
+    --sa-warning       : #f59e0b;
+    --sa-danger        : #ef4444;
+    --sa-radius        : 12px;
+    --sa-shadow        : 0 1px 8px rgba(0,0,0,0.07);
+    --sa-transition    : 0.2s ease;
+}
+
+/* === 6. FOND CONTENU PRINCIPAL === */
+body {
+    background-color: var(--sa-content-bg) !important;
+    color: var(--sa-text) !important;
+}
+
+.page-body, 
+.page-wrapper > .container-xl, 
+.page-wrapper > .container-fluid {
+    padding: 1.5rem !important;
+}
+
+.page-wrapper {
+    background-color: var(--sa-content-bg) !important;
+}
+
+/* Conserver margin-left: 260px sur .page-wrapper pour ne pas casser le layout sidebar */
+@media (min-width: 992px) {
+    .page-wrapper {
+        margin-left: 260px !important;
+    }
+}
+
+/* === 1. SIDEBAR === */
+.navbar-vertical,
+nav.navbar-vertical {
+    background-color: var(--sa-sidebar-bg) !important;
+    width: 260px !important;
+    border-right: none !important;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.15) !important;
+}
+
+/* Hover sur items interactifs */
+.navbar-vertical .nav-link,
+.navbar-vertical a {
+    color: rgba(255,255,255,0.7) !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 6px !important;
+    margin: 2px 8px !important;
+}
+
+.navbar-vertical .nav-link:hover {
+    background-color: var(--sa-sidebar-hover) !important;
+    color: #fff !important;
+}
+
+/* Item actif */
+/* À vérifier en DevTools : la classe active sur GLPI peut être sur le nav-item ou nav-link */
+.navbar-vertical .nav-item.active > .nav-link,
+.navbar-vertical .nav-link.active {
+    background-color: rgba(59,130,246,0.12) !important;
+    border-left: 3px solid var(--sa-accent) !important;
+    color: #fff !important;
+    border-radius: 0 6px 6px 0 !important;
+    margin-left: 0 !important;
+    padding-left: calc(1rem + 8px - 3px) !important; /* compense margin et border */
+}
+
+/* Icônes de sidebar légèrement plus petites (16px) */
+.navbar-vertical .nav-link i,
+.navbar-vertical .nav-link svg,
+.navbar-vertical .nav-link .ti {
+    font-size: 16px !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin-right: 10px !important;
+    color: rgba(255,255,255,0.5) !important;
+}
+
+.navbar-vertical .nav-link.active i,
+.navbar-vertical .nav-link.active .ti,
+.navbar-vertical .nav-link:hover i,
+.navbar-vertical .nav-link:hover .ti {
+    color: var(--sa-accent) !important;
+}
+
+/* "Réduire le menu" : style discret en bas */
+/* À vérifier en DevTools : le sélecteur dépend de GLPI */
+.navbar-vertical .collapse-btn,
+.navbar-vertical .navbar-brand-autodark + .nav-link,
+.navbar-vertical .nav-link[title*="duire"],
+.navbar-vertical .nav-link[title*="ollapse"] {
+    opacity: 0.6 !important;
+    font-size: 12px !important;
+}
+
+/* Séparateur entre groupes */
+/* À vérifier en DevTools */
+.navbar-vertical hr,
+.navbar-vertical .nav-item + .nav-item.dropdown,
+.navbar-vertical .nav-category {
+    border-top: 1px solid rgba(255,255,255,0.06) !important;
+    margin-top: 8px !important;
+    padding-top: 8px !important;
+}
+
+/* === 2. NAVBAR TOP === */
+header.navbar:not(.navbar-vertical),
+.navbar.topbar {
+    background-color: var(--sa-navbar-bg) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+}
+
+/* Barre de recherche */
+header.navbar input[type="search"],
+.navbar.topbar .global-search input,
+#search-input {
+    background-color: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: 10px !important;
+    color: #fff !important;
+    padding: 0.4rem 1rem !important;
+}
+
+header.navbar input[type="search"]::placeholder,
+.navbar.topbar .global-search input::placeholder,
+#search-input::placeholder {
+    color: rgba(255,255,255,0.4) !important;
+}
+
+header.navbar input[type="search"]:focus,
+.navbar.topbar .global-search input:focus,
+#search-input:focus {
+    background-color: rgba(255,255,255,0.12) !important;
+    border-color: var(--sa-accent) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.2) !important;
+}
+
+/* Nom utilisateur et entité racine */
+/* À vérifier en DevTools */
+.navbar.topbar .user-menu .nav-link > div:first-child,
+.navbar.topbar .user-menu-dropdown-toggle > div:first-child > div:first-child,
+.user-menu .nav-link span {
+    font-weight: 600 !important;
+    color: #fff !important;
+}
+
+.navbar.topbar .text-muted-menu,
+.navbar.topbar .user-menu-dropdown-toggle .small,
+.user-menu .text-muted {
+    font-size: 11px !important;
+    color: rgba(255,255,255,0.55) !important;
+}
+
+/* === 3. ONGLETS TABLEAU DE BORD === */
+/* À vérifier en DevTools : nav-tabs */
+.nav-tabs {
+    background: transparent !important;
+    border-bottom: 1px solid var(--sa-border) !important;
+    gap: 4px !important;
+}
+
+.nav-tabs .nav-link {
+    color: var(--sa-muted) !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 8px 8px 0 0 !important;
+    padding: 0.75rem 1.25rem !important;
+    font-weight: 500 !important;
+    background: transparent !important;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--sa-accent) !important;
+    background-color: var(--sa-accent-light) !important;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: var(--sa-card-bg) !important;
+    border-top: 2px solid var(--sa-accent) !important;
+    border-left: 1px solid var(--sa-border) !important;
+    border-right: 1px solid var(--sa-border) !important;
+    border-bottom: 1px solid var(--sa-card-bg) !important; /* over lap bottom border */
+    font-weight: 700 !important;
+    color: var(--sa-text) !important;
+    margin-bottom: -1px !important; /* overlap bottom border */
+}
+
+/* === 4. ALERTE SÉCURITÉ (warning) === */
+.alert-warning {
+    background-color: #fffbeb !important;
+    border: none !important;
+    border-left: 3px solid var(--sa-warning) !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    color: #92400e !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03) !important;
+}
+
+/* === 5. STATS DU PARC (Mini-cards) === */
+/* À vérifier en DevTools : search_config_top ou ajax_box nav-tabs */
+.search_config_top .nav-link,
+.tab-navigate .nav-link,
+[id*="tabspanel"] .nav-tabs .nav-link,
+.ticket-summary-tabs .nav-link {
+    background-color: var(--sa-card-bg) !important;
+    border-radius: 10px !important;
+    padding: 0.75rem 1rem !important;
+    border: 1px solid var(--sa-border) !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+    display: inline-flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    margin-right: 8px !important;
+    margin-bottom: 8px !important;
+}
+
+/* Hover des mini-cards stats */
+.search_config_top .nav-link:hover,
+.tab-navigate .nav-link:hover,
+[id*="tabspanel"] .nav-tabs .nav-link:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+    transform: translateY(-2px) !important;
+    background-color: var(--sa-card-bg) !important; /* override tab hover bg */
+}
+
+/* Chiffre */
+.search_config_top .nav-link strong,
+.search_config_top .nav-link .counter,
+.tab-navigate .nav-link strong,
+[id*="tabspanel"] .nav-tabs .nav-link strong {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    color: var(--sa-accent) !important;
+    line-height: 1 !important;
+    display: block !important;
+}
+
+/* Label */
+.search_config_top .nav-link span:not(.counter),
+.search_config_top .nav-link,
+.tab-navigate .nav-link,
+[id*="tabspanel"] .nav-tabs .nav-link {
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    color: var(--sa-muted) !important;
+}
+
+/* Override color for active state of stats */
+.search_config_top .nav-link.active strong,
+.tab-navigate .nav-link.active strong {
+    color: var(--sa-text) !important;
+}
+
+/* Les cartes générales */
+.card {
+    background-color: var(--sa-card-bg) !important;
+    border-radius: var(--sa-radius) !important;
+    box-shadow: var(--sa-shadow) !important;
+    border: 1px solid var(--sa-border) !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important;
+}
+
+/* En-tête de carte */
+.card-header {
+    background-color: transparent !important;
+    border-bottom: 1px solid var(--sa-border) !important;
+    padding: 1rem 1.5rem !important;
+    font-weight: 600 !important;
+}
+
+.card-body {
+    padding: 1.5rem !important;
+}
+
+/* === 7. SCROLLBAR CUSTOM === */
+::-webkit-scrollbar {
+    width: 6px !important;
+    height: 6px !important;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1 !important;
+    border-radius: 3px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8 !important;
+}
+
+/* === 8. TRANSITIONS GLOBALES === */
+a, button, .btn, input, select, textarea, .card, .nav-link {
+    transition: background var(--sa-transition), color var(--sa-transition), box-shadow var(--sa-transition), transform var(--sa-transition), border-color var(--sa-transition) !important;
+}

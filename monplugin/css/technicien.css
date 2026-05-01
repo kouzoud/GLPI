@@ -1,0 +1,249 @@
+/* ============================================================
+   TECHNICIEN — Profil ID: 6
+   Style : Fonctionnel/Lisible — focus sur les statuts de tickets
+   Pages : ticket.php (liste), ticket.php (détail)
+   Plugin monplugin v1.1.0
+
+   Codes statuts GLPI natifs :
+     1 = Nouveau      → rouge
+     2 = En cours (assigné) → orange
+     3 = En cours (planifié) → orange clair
+     4 = En attente   → gris bleu
+     5 = Résolu       → vert
+     6 = Clos         → gris
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --tec-new:         #dc2626;
+    --tec-new-bg:      #fff1f1;
+    --tec-new-border:  #fca5a5;
+    --tec-ongoing:     #d97706;
+    --tec-ongoing-bg:  #fffbeb;
+    --tec-ongoing-border: #fcd34d;
+    --tec-pending:     #4a5568;
+    --tec-pending-bg:  #f7fafc;
+    --tec-resolved:    #16a34a;
+    --tec-resolved-bg: #f0fdf4;
+    --tec-resolved-border: #86efac;
+    --tec-closed:      #94a3b8;
+    --tec-closed-bg:   #f8fafc;
+    --tec-accent:      #2563eb;
+    --tec-border:      #e2e8f0;
+    --tec-text:        #1e293b;
+}
+
+/* === BODY === */
+body { font-family: 'Inter', sans-serif !important; background-color: #f8fafc !important; }
+
+/* === NAVBAR — sobre pour le technicien === */
+.navbar, header.navbar {
+    background-color: #1e293b !important;
+    border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+}
+.navbar .nav-link { color: #94a3b8 !important; }
+.navbar .nav-link:hover { color: #fff !important; }
+.navbar-brand { color: #e2e8f0 !important; font-weight: 700 !important; }
+
+/* === TABLEAUX DE TICKETS (liste) === */
+.table, table.tab_cadre_fixe, table.tab_cadre {
+    font-size: 0.85rem !important;
+    width: 100% !important;
+}
+
+.table thead th,
+table.tab_cadre_fixe thead th,
+table.tab_cadre thead th {
+    background-color: #f1f5f9 !important;
+    color: #475569 !important;
+    font-weight: 700 !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    border-bottom: 2px solid var(--tec-border) !important;
+    padding: 0.65rem 0.8rem !important;
+    white-space: nowrap !important;
+}
+
+/* Ligne par défaut */
+.table tbody tr td,
+table.tab_cadre_fixe tbody tr td,
+table.tab_cadre tbody tr td {
+    padding: 0.55rem 0.8rem !important;
+    vertical-align: middle !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    color: var(--tec-text) !important;
+    transition: background 0.15s !important;
+}
+
+/* ====================================================
+   SURBRILLANCE PAR STATUT
+   Méthode 1 : attributs data-status (GLPI 10 moderne)
+   Méthode 2 : classes CSS héritées (rétrocompat)
+   À vérifier en DevTools sur ta version GLPI
+   ==================================================== */
+
+/* --- STATUT 1 : NOUVEAU (rouge) --- */
+tr[data-itemtype="Ticket"] td.status_1,
+tr[data-status="1"] td,
+tr.status_1 td,
+tbody tr td[data-status="1"],
+/* Fallback : cellule contenant "Nouveau" */
+td.center:has(span[class*="status_1"]) {
+    background-color: var(--tec-new-bg) !important;
+    border-left: 4px solid var(--tec-new) !important;
+}
+/* Toute la ligne si GLPI met la classe sur le tr */
+tr.status_1 { background-color: var(--tec-new-bg) !important; }
+tr.status_1 td { border-bottom: 1px solid var(--tec-new-border) !important; }
+
+/* Badge "Nouveau" inline */
+.badge.status_1,
+span.status_1,
+[class*="label_status_1"] {
+    background-color: var(--tec-new) !important;
+    color: #fff !important;
+    border-radius: 20px !important;
+    padding: 0.25em 0.7em !important;
+    font-weight: 600 !important;
+    font-size: 0.78rem !important;
+}
+
+/* --- STATUT 2 : EN COURS ASSIGNÉ (orange) --- */
+tr.status_2 { background-color: var(--tec-ongoing-bg) !important; }
+tr.status_2 td {
+    border-bottom: 1px solid var(--tec-ongoing-border) !important;
+    border-left-color: var(--tec-ongoing) !important;
+}
+tr.status_2 > td:first-child { border-left: 4px solid var(--tec-ongoing) !important; }
+.badge.status_2, span.status_2, [class*="label_status_2"] {
+    background-color: var(--tec-ongoing) !important;
+    color: #fff !important;
+    border-radius: 20px !important;
+    padding: 0.25em 0.7em !important;
+    font-weight: 600 !important;
+    font-size: 0.78rem !important;
+}
+
+/* --- STATUT 3 : EN COURS PLANIFIÉ (orange clair) --- */
+tr.status_3 { background-color: #fff8f0 !important; }
+tr.status_3 > td:first-child { border-left: 4px solid #fb923c !important; }
+.badge.status_3, span.status_3, [class*="label_status_3"] {
+    background-color: #fb923c !important;
+    color: #fff !important;
+    border-radius: 20px !important;
+    padding: 0.25em 0.7em !important;
+    font-size: 0.78rem !important;
+}
+
+/* --- STATUT 4 : EN ATTENTE (gris bleu) --- */
+tr.status_4 { background-color: var(--tec-pending-bg) !important; opacity: 0.85 !important; }
+tr.status_4 > td:first-child { border-left: 4px solid #64748b !important; }
+.badge.status_4, span.status_4, [class*="label_status_4"] {
+    background-color: #64748b !important;
+    color: #fff !important;
+    border-radius: 20px !important;
+    padding: 0.25em 0.7em !important;
+    font-size: 0.78rem !important;
+}
+
+/* --- STATUT 5 : RÉSOLU (vert) --- */
+tr.status_5 { background-color: var(--tec-resolved-bg) !important; }
+tr.status_5 > td:first-child { border-left: 4px solid var(--tec-resolved) !important; }
+tr.status_5 td { border-bottom: 1px solid var(--tec-resolved-border) !important; }
+.badge.status_5, span.status_5, [class*="label_status_5"] {
+    background-color: var(--tec-resolved) !important;
+    color: #fff !important;
+    border-radius: 20px !important;
+    padding: 0.25em 0.7em !important;
+    font-size: 0.78rem !important;
+}
+
+/* --- STATUT 6 : CLOS (gris) --- */
+tr.status_6 { background-color: var(--tec-closed-bg) !important; opacity: 0.7 !important; }
+tr.status_6 > td:first-child { border-left: 4px solid var(--tec-closed) !important; }
+.badge.status_6, span.status_6, [class*="label_status_6"] {
+    background-color: var(--tec-closed) !important;
+    color: #fff !important;
+    border-radius: 20px !important;
+    padding: 0.25em 0.7em !important;
+    font-size: 0.78rem !important;
+}
+
+/* === HOVER GÉNÉRIQUE sur les lignes === */
+.table tbody tr:hover td { filter: brightness(0.97) !important; }
+
+/* === LÉGENDE DES COULEURS (optionnelle, si tu veux l'afficher) === */
+/* Décommenter et injecter via hook PHP si besoin */
+/*
+.ticket-status-legend {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    font-size: 0.8rem;
+}
+*/
+
+/* === PRIORITÉ TICKET (urgence) — À vérifier en DevTools === */
+.priority_1, .priority_very_high { color: var(--tec-new) !important; font-weight: 700 !important; }
+.priority_2, .priority_high      { color: var(--tec-ongoing) !important; font-weight: 600 !important; }
+.priority_3, .priority_medium    { color: #ca8a04 !important; }
+.priority_4, .priority_low       { color: var(--tec-resolved) !important; }
+.priority_5, .priority_very_low  { color: var(--tec-closed) !important; }
+
+/* === PAGE DÉTAIL TICKET === */
+.card {
+    border-radius: 10px !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07) !important;
+}
+.card-header {
+    background: #f8fafc !important;
+    border-bottom: 1px solid var(--tec-border) !important;
+    font-weight: 700 !important;
+    color: var(--tec-text) !important;
+}
+
+/* Bloc de suivi / timeline des messages */
+.timeline-item,
+.itil-timeline .timeline-item {
+    border-left: 3px solid var(--tec-border) !important;
+    padding-left: 16px !important;
+    margin-bottom: 1rem !important;
+    transition: border-color 0.2s !important;
+}
+.timeline-item:hover { border-left-color: var(--tec-accent) !important; }
+
+/* === BOUTONS === */
+.btn-primary {
+    background-color: var(--tec-accent) !important;
+    border-color: var(--tec-accent) !important;
+    font-weight: 600 !important;
+    border-radius: 6px !important;
+}
+.btn-primary:hover {
+    background-color: #1d4ed8 !important;
+    box-shadow: 0 4px 12px rgba(37,99,235,0.3) !important;
+}
+.btn-danger  { background-color: var(--tec-new) !important; border-color: var(--tec-new) !important; }
+.btn-success { background-color: var(--tec-resolved) !important; border-color: var(--tec-resolved) !important; }
+.btn-warning { background-color: var(--tec-ongoing) !important; border-color: var(--tec-ongoing) !important; color: #fff !important; }
+
+/* === FORMULAIRES === */
+.form-control, .form-select {
+    border-radius: 6px !important;
+    border: 1px solid var(--tec-border) !important;
+    font-size: 0.875rem !important;
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--tec-accent) !important;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.15) !important;
+}
+
+/* === ALERTES === */
+.alert-success { border-left: 4px solid var(--tec-resolved) !important; background: var(--tec-resolved-bg) !important; }
+.alert-danger  { border-left: 4px solid var(--tec-new) !important; background: var(--tec-new-bg) !important; }
+.alert-warning { border-left: 4px solid var(--tec-ongoing) !important; background: var(--tec-ongoing-bg) !important; }

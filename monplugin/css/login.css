@@ -1,0 +1,244 @@
+/* ============================================================
+   PAGE LOGIN — v1.1.7
+   Sélecteurs exacts HTML GLPI : body.welcome-anonymous
+   Fix layout : col-md-5 élargi, col-auto caché
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --login-navy:   #1a2e4a;
+    --login-navy-2: #0f1e33;
+    --login-blue:   #2563eb;
+    --login-white:  #ffffff;
+    --login-text:   #1e293b;
+    --login-muted:  #64748b;
+    --login-border: #e2e8f0;
+}
+
+/* === FOND DE PAGE === */
+body.welcome-anonymous {
+    font-family: 'Inter', sans-serif !important;
+    background: linear-gradient(135deg, var(--login-navy) 0%, #1a3a6e 50%, var(--login-navy-2) 100%) !important;
+    min-height: 100vh !important;
+    overflow-x: hidden !important;
+}
+body.welcome-anonymous::before {
+    content: '' !important;
+    position: fixed !important;
+    top: -20%; right: -10% !important;
+    width: 500px; height: 500px !important;
+    background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%) !important;
+    border-radius: 50% !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+}
+
+/* === WRAPPER === */
+.page-anonymous {
+    background: transparent !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+/* === CONTENEUR PRINCIPAL ===
+   GLPI met max-width:60rem en inline style — on le réduit via CSS
+   pour que le col-md-5 soit plus grand relativement */
+.container-tight {
+    position: relative !important;
+    z-index: 1 !important;
+    max-width: 500px !important;  /* Override le 60rem inline */
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 1rem !important;
+}
+
+/* === FIX LAYOUT ROW BOOTSTRAP ===
+   Le formulaire est dans col-md-5 et le <link> CSS dans col-auto.
+   On force le col-md-5 à prendre toute la largeur disponible
+   et on cache le col-auto (conteneur du <link>, purement technique) */
+.card.main-content-card .row.justify-content-center > .col-md-5,
+.container-tight .row.justify-content-center > .col-md-5 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+/* Cache le div col-auto qui contient uniquement le <link> CSS */
+.container-tight .row.justify-content-center > .col-auto,
+.card.main-content-card .row > .col-auto {
+    display: none !important;
+    width: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+/* === LOGO GLPI === */
+.glpi-logo {
+    filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0,0,0,0.4)) !important;
+    max-height: 55px !important;
+    margin: 0 auto 1.5rem auto !important;
+    display: block !important;
+}
+
+/* === CARD PRINCIPALE === */
+.card.main-content-card {
+    background: #ffffff !important;
+    border: none !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3) !important;
+    overflow: visible !important;
+    animation: loginFadeUp 0.4s ease both !important;
+}
+@keyframes loginFadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Cacher le card-header vide du dessus */
+.card.main-content-card > .card-header:first-child:empty {
+    display: none !important;
+}
+
+/* Padding du card-body */
+.card.main-content-card .card-body {
+    padding: 2rem 2rem !important;
+}
+
+/* === TITRE === */
+.card.main-content-card h2,
+.card.main-content-card .card-header h2 {
+    font-size: 1.4rem !important;
+    font-weight: 800 !important;
+    color: var(--login-text) !important;
+    text-align: center !important;
+    line-height: 1.3 !important;
+    white-space: nowrap !important; /* Empêche le retour à la ligne */
+    margin-bottom: 0 !important;
+}
+.card.main-content-card .card-header.mb-4 {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 0 1.25rem 0 !important;
+    text-align: center !important;
+}
+
+/* === LABELS === */
+.card.main-content-card label,
+.card.main-content-card .form-label {
+    font-weight: 600 !important;
+    font-size: 0.83rem !important;
+    color: var(--login-text) !important;
+    margin-bottom: 0.3rem !important;
+    display: block !important;
+    white-space: nowrap !important;
+}
+
+/* === INPUTS === */
+#login_name,
+#login_password,
+.card.main-content-card .form-control {
+    border-radius: 10px !important;
+    border: 1.5px solid var(--login-border) !important;
+    font-size: 0.9rem !important;
+    padding: 0.6rem 0.9rem !important;
+    background: #f8fafc !important;
+    color: var(--login-text) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+#login_name:focus,
+#login_password:focus,
+.card.main-content-card .form-control:focus {
+    border-color: var(--login-blue) !important;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.15) !important;
+    background: #fff !important;
+    outline: none !important;
+}
+
+/* === SELECT2 "Source de connexion" === */
+.card.main-content-card .select2-container {
+    width: 100% !important;
+}
+.card.main-content-card .select2-selection--single {
+    border-radius: 10px !important;
+    border: 1.5px solid var(--login-border) !important;
+    height: 40px !important;
+    padding: 0.5rem 0.9rem !important;
+    background: #f8fafc !important;
+    display: flex !important;
+    align-items: center !important;
+}
+.card.main-content-card .select2-selection__rendered {
+    font-size: 0.88rem !important;
+    color: var(--login-text) !important;
+    padding: 0 !important;
+    overflow: visible !important; /* Empêche la troncature */
+    text-overflow: unset !important;
+    white-space: nowrap !important;
+}
+.card.main-content-card .select2-selection__arrow {
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+/* === CHECKBOX === */
+.card.main-content-card .form-check {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+.card.main-content-card .form-check-label {
+    font-size: 0.83rem !important;
+    color: var(--login-muted) !important;
+    white-space: nowrap !important; /* Évite le retour à la ligne */
+    line-height: 1 !important;
+}
+.card.main-content-card .form-check-input:checked {
+    background-color: var(--login-blue) !important;
+    border-color: var(--login-blue) !important;
+}
+
+/* === BOUTON CONNEXION === */
+button[name="submit"],
+.card.main-content-card .btn-primary {
+    background: linear-gradient(135deg, var(--login-blue) 0%, var(--login-navy) 100%) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 0.72rem 1rem !important;
+    font-size: 0.92rem !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    width: 100% !important;
+    cursor: pointer !important;
+    box-shadow: 0 6px 18px rgba(37,99,235,0.3) !important;
+    transition: all 0.2s ease !important;
+    margin-top: 0.5rem !important;
+}
+button[name="submit"]:hover,
+.card.main-content-card .btn-primary:hover {
+    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important;
+    box-shadow: 0 10px 28px rgba(37,99,235,0.42) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* === FOOTER COPYRIGHT === */
+.text-center.text-muted.mt-3,
+.text-center.text-muted.mt-3 a {
+    color: rgba(255,255,255,0.4) !important;
+    font-size: 0.72rem !important;
+}
+.text-center.text-muted.mt-3 a:hover { color: rgba(255,255,255,0.7) !important; }
+
+/* === ERREURS === */
+.card.main-content-card .alert-danger {
+    border-radius: 10px !important;
+    border-left: 4px solid #dc2626 !important;
+    background: #fff1f1 !important;
+    font-size: 0.82rem !important;
+    color: #7f1d1d !important;
+}

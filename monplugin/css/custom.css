@@ -1,0 +1,114 @@
+/* =========================================
+   PORTAIL EMPLOYÉ (SELF-SERVICE / HELPDESK)
+   ========================================= */
+
+/* 1. La grande bannière de recherche en haut (Hero Banner) */
+.helpdesk-home-container .search-banner {
+    background: linear-gradient(135deg, #4a90e2 0%, #003366 100%) !important; /* Dégradé Bleu Cloud */
+    border-radius: 0 0 30px 30px !important; /* Arrondir le bas de la bannière */
+    padding: 40px 0 !important;
+    box-shadow: 0 10px 30px rgba(0, 51, 102, 0.2) !important;
+    margin-bottom: -30px !important; /* Superposer légèrement les cartes en dessous */
+    position: relative;
+    z-index: 1;
+}
+
+/* Changer la couleur du grand titre "Besoin d'aide ?" en blanc */
+.helpdesk-home-container .search-banner-content h1 {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    font-size: 2.5rem !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+}
+
+/* Cacher les illustrations SVG moches de GLPI sur les côtés (optionnel mais plus propre) */
+.helpdesk-home-container .search-banner .scene {
+    opacity: 0.2 !important; /* On les rend transparentes pour garder l'attention sur la recherche */
+}
+
+/* 2. La grande barre de recherche centrale */
+.helpdesk-home-container .search-bar-container .home-search {
+    height: 60px !important;
+    border-radius: 30px !important; /* Très arrondi */
+    font-size: 1.2rem !important;
+    padding-left: 50px !important; /* Espace pour l'icône de loupe */
+    border: 3px solid rgba(255,255,255,0.8) !important;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+}
+
+.helpdesk-home-container .search-bar-container .input-icon-addon {
+    color: #4a90e2 !important;
+    font-size: 1.5rem !important;
+}
+
+/* 3. Les Cartes d'actions rapides (Créer un ticket, FAQ, etc.) */
+.tiles-banner {
+    position: relative;
+    z-index: 10; /* Pour qu'elles passent au-dessus de la bannière */
+}
+
+.tiles-banner .card {
+    border-radius: 20px !important;
+    border: none !important;
+    background: #ffffff !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    overflow: hidden !important;
+}
+
+/* Effet de "flottaison" au survol des cartes */
+.tiles-banner .card:hover {
+    transform: translateY(-10px) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12) !important;
+    border-bottom: 4px solid #4a90e2 !important; /* Ligne bleue qui apparaît en bas */
+}
+
+/* Les titres dans les cartes */
+.tiles-banner .card h2 {
+    font-weight: 700 !important;
+    color: #2d3748 !important;
+    font-size: 1.3rem !important;
+}
+
+/* Les textes gris dans les cartes */
+.tiles-banner .card .text-secondary {
+    color: #718096 !important;
+    font-size: 0.95rem !important;
+}
+
+/* Les grandes icônes SVG dans les cartes */
+.tiles-banner .aspect-ratio-1 svg {
+    fill: #4a90e2 !important; /* Changer la couleur de l'icône */
+    transition: transform 0.3s ease !important;
+}
+
+.tiles-banner .card:hover .aspect-ratio-1 svg {
+    transform: scale(1.1) rotate(5deg) !important; /* Petite animation au survol */
+}
+
+/* 4. Zone des "Tickets en cours / Résolus" */
+.tickets-banner {
+    margin-top: 40px !important;
+}
+
+.tickets-banner .card-tabs > .card {
+    border-radius: 15px !important;
+    border: none !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05) !important;
+}
+
+/* 5. Menu du haut (Topbar) Employé */
+body.helpdesk header.topbar {
+    background-color: #ffffff !important;
+    border-bottom: none !important;
+}
+
+/* Couleur du texte du menu haut */
+body.helpdesk .topbar .nav-link {
+    color: #4a5568 !important;
+    font-weight: 600 !important;
+}
+
+body.helpdesk .topbar .nav-link:hover {
+    color: #4a90e2 !important;
+}
