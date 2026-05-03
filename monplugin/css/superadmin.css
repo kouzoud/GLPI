@@ -1,87 +1,98 @@
 /* ============================================================
    SUPER-ADMIN — Profil ID: 4
-   Style : Corporate Moderne — Linear/Notion/Vercel inspired
+   Charte graphique CID (Conseil, Ingénierie et Développement)
+   Palette extraite du logo officiel CID
    ============================================================ */
 
-/* === PALETTE IMPOSÉE === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* === PALETTE CID OFFICIELLE === */
 :root {
-    --sa-sidebar-bg    : #0f172a;
-    --sa-sidebar-hover : rgba(59,130,246,0.10);
-    --sa-accent        : #3b82f6;
-    --sa-accent-light  : #eff6ff;
-    --sa-navbar-bg     : #1e293b;
-    --sa-content-bg    : #f8fafc;
-    --sa-card-bg       : #ffffff;
-    --sa-border        : #e2e8f0;
-    --sa-text          : #1e293b;
-    --sa-muted         : #64748b;
-    --sa-success       : #10b981;
-    --sa-warning       : #f59e0b;
-    --sa-danger        : #ef4444;
-    --sa-radius        : 12px;
-    --sa-shadow        : 0 1px 8px rgba(0,0,0,0.07);
-    --sa-transition    : 0.2s ease;
+    --cid-navy: #1b3a6b;
+    /* Bleu marine foncé — couleur principale */
+    --cid-orange: #d4521c;
+    /* Orange chaleureux — accent, CTA */
+    --cid-blue: #2e7fba;
+    /* Bleu acier moyen — interactions */
+    --cid-white: #ffffff;
+    /* Blanc pur — surfaces */
+    --cid-bg: #f4f7fb;
+    /* Gris bleuté très clair — fond général */
+    --cid-border: #dde5f0;
+    /* Bleu gris doux — bordures */
+    --cid-text: #1b3a6b;
+    /* Texte principal (= navy) */
+    --cid-muted: #5a7499;
+    /* Navy désaturé — textes secondaires */
+    --cid-navy-light: #eef3fa;
+    /* Navy très clair — hover bg */
+    --cid-orange-light: #fff3ee;
+    /* Orange très clair — alertes warning */
+    --cid-success: #1a8c6e;
+    /* Vert corporate — validations */
+    --cid-danger: #c0392b;
+    /* Rouge sobre — erreurs */
+    --cid-navbar-bg: #1e4278;
+    /* Navy légèrement plus clair — navbar top */
+    --cid-radius: 12px;
+    --cid-shadow: 0 2px 10px rgba(27, 58, 107, 0.07);
+    --cid-transition: 0.2s ease;
 }
 
-/* === 6. FOND CONTENU PRINCIPAL === */
+/* === BODY & FOND GÉNÉRAL === */
 body {
-    background-color: var(--sa-content-bg) !important;
-    color: var(--sa-text) !important;
+    font-family: 'Inter', sans-serif !important;
+    background-color: var(--cid-bg) !important;
+    color: var(--cid-text) !important;
 }
 
-.page-body, 
-.page-wrapper > .container-xl, 
-.page-wrapper > .container-fluid {
+.page-body,
+.page-wrapper>.container-xl,
+.page-wrapper>.container-fluid {
     padding: 1.5rem !important;
 }
 
 .page-wrapper {
-    background-color: var(--sa-content-bg) !important;
+    background-color: var(--cid-bg) !important;
 }
 
-/* Conserver margin-left: 260px sur .page-wrapper pour ne pas casser le layout sidebar */
-@media (min-width: 992px) {
-    .page-wrapper {
-        margin-left: 260px !important;
-    }
-}
-
-/* === 1. SIDEBAR === */
+/* === 1. SIDEBAR (menu latéral gauche) === */
 .navbar-vertical,
 nav.navbar-vertical {
-    background-color: var(--sa-sidebar-bg) !important;
-    width: 260px !important;
+    background-color: var(--cid-navy) !important;
     border-right: none !important;
-    box-shadow: 2px 0 12px rgba(0,0,0,0.15) !important;
+    box-shadow: 2px 0 12px rgba(27, 58, 107, 0.25) !important;
 }
 
-/* Hover sur items interactifs */
+/* Items de navigation */
 .navbar-vertical .nav-link,
 .navbar-vertical a {
-    color: rgba(255,255,255,0.7) !important;
+    color: rgba(255, 255, 255, 0.82) !important;
     padding: 0.5rem 1rem !important;
     border-radius: 6px !important;
     margin: 2px 8px !important;
+    transition: background var(--cid-transition), color var(--cid-transition) !important;
 }
 
+/* Hover sidebar */
 .navbar-vertical .nav-link:hover {
-    background-color: var(--sa-sidebar-hover) !important;
-    color: #fff !important;
+    background-color: rgba(255, 255, 255, 0.07) !important;
+    color: #ffffff !important;
 }
 
-/* Item actif */
-/* À vérifier en DevTools : la classe active sur GLPI peut être sur le nav-item ou nav-link */
-.navbar-vertical .nav-item.active > .nav-link,
+/* Item actif — bordure orange à gauche */
+/* À vérifier en DevTools : la classe active peut être sur nav-item ou nav-link */
+.navbar-vertical .nav-item.active>.nav-link,
 .navbar-vertical .nav-link.active {
-    background-color: rgba(59,130,246,0.12) !important;
-    border-left: 3px solid var(--sa-accent) !important;
-    color: #fff !important;
+    background-color: rgba(255, 255, 255, 0.10) !important;
+    border-left: 3px solid var(--cid-orange) !important;
+    color: #ffffff !important;
     border-radius: 0 6px 6px 0 !important;
     margin-left: 0 !important;
-    padding-left: calc(1rem + 8px - 3px) !important; /* compense margin et border */
+    padding-left: calc(1rem + 8px - 3px) !important;
 }
 
-/* Icônes de sidebar légèrement plus petites (16px) */
+/* Icônes sidebar */
 .navbar-vertical .nav-link i,
 .navbar-vertical .nav-link svg,
 .navbar-vertical .nav-link .ti {
@@ -89,32 +100,41 @@ nav.navbar-vertical {
     width: 16px !important;
     height: 16px !important;
     margin-right: 10px !important;
-    color: rgba(255,255,255,0.5) !important;
+    color: rgba(255, 255, 255, 0.60) !important;
 }
 
+/* Icônes actives / hover — bleu acier */
 .navbar-vertical .nav-link.active i,
 .navbar-vertical .nav-link.active .ti,
 .navbar-vertical .nav-link:hover i,
 .navbar-vertical .nav-link:hover .ti {
-    color: var(--sa-accent) !important;
+    color: var(--cid-blue) !important;
 }
 
-/* "Réduire le menu" : style discret en bas */
-/* À vérifier en DevTools : le sélecteur dépend de GLPI */
+/* Logo GLPI en blanc */
+.navbar-vertical .glpi-logo,
+.navbar-vertical .navbar-brand img,
+.navbar-vertical .navbar-brand .glpi-logo {
+    filter: brightness(0) invert(1) !important;
+}
+
+/* "Réduire le menu" — style discret */
+/* À vérifier en DevTools */
 .navbar-vertical .collapse-btn,
-.navbar-vertical .navbar-brand-autodark + .nav-link,
+.navbar-vertical .navbar-brand-autodark+.nav-link,
 .navbar-vertical .nav-link[title*="duire"],
 .navbar-vertical .nav-link[title*="ollapse"] {
-    opacity: 0.6 !important;
+    color: rgba(255, 255, 255, 0.40) !important;
+    opacity: 0.7 !important;
     font-size: 12px !important;
 }
 
-/* Séparateur entre groupes */
+/* Séparateurs entre groupes */
 /* À vérifier en DevTools */
 .navbar-vertical hr,
-.navbar-vertical .nav-item + .nav-item.dropdown,
+.navbar-vertical .nav-item+.nav-item.dropdown,
 .navbar-vertical .nav-category {
-    border-top: 1px solid rgba(255,255,255,0.06) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
     margin-top: 8px !important;
     padding-top: 8px !important;
 }
@@ -122,109 +142,227 @@ nav.navbar-vertical {
 /* === 2. NAVBAR TOP === */
 header.navbar:not(.navbar-vertical),
 .navbar.topbar {
-    background-color: var(--sa-navbar-bg) !important;
-    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+    background-color: var(--cid-navbar-bg) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    box-shadow: 0 2px 8px rgba(27, 58, 107, 0.15) !important;
 }
 
 /* Barre de recherche */
 header.navbar input[type="search"],
 .navbar.topbar .global-search input,
 #search-input {
-    background-color: rgba(255,255,255,0.08) !important;
-    border: 1px solid rgba(255,255,255,0.12) !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
     border-radius: 10px !important;
     color: #fff !important;
     padding: 0.4rem 1rem !important;
+    transition: background var(--cid-transition), border-color var(--cid-transition), box-shadow var(--cid-transition) !important;
 }
 
 header.navbar input[type="search"]::placeholder,
 .navbar.topbar .global-search input::placeholder,
 #search-input::placeholder {
-    color: rgba(255,255,255,0.4) !important;
+    color: rgba(255, 255, 255, 0.40) !important;
 }
 
 header.navbar input[type="search"]:focus,
 .navbar.topbar .global-search input:focus,
 #search-input:focus {
-    background-color: rgba(255,255,255,0.12) !important;
-    border-color: var(--sa-accent) !important;
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    border-color: var(--cid-blue) !important;
     outline: none !important;
-    box-shadow: 0 0 0 3px rgba(59,130,246,0.2) !important;
+    box-shadow: 0 0 0 3px rgba(46, 127, 186, 0.25) !important;
 }
 
-/* Nom utilisateur et entité racine */
+/* Nom utilisateur */
 /* À vérifier en DevTools */
-.navbar.topbar .user-menu .nav-link > div:first-child,
-.navbar.topbar .user-menu-dropdown-toggle > div:first-child > div:first-child,
+.navbar.topbar .user-menu .nav-link>div:first-child,
+.navbar.topbar .user-menu-dropdown-toggle>div:first-child>div:first-child,
 .user-menu .nav-link span {
     font-weight: 600 !important;
-    color: #fff !important;
+    color: #ffffff !important;
 }
 
+/* Entité */
 .navbar.topbar .text-muted-menu,
 .navbar.topbar .user-menu-dropdown-toggle .small,
 .user-menu .text-muted {
     font-size: 11px !important;
-    color: rgba(255,255,255,0.55) !important;
+    color: rgba(255, 255, 255, 0.55) !important;
+}
+
+/* Avatar — fond orange CID */
+.navbar.topbar .avatar,
+header.navbar .avatar {
+    background-color: var(--cid-orange) !important;
+    color: #ffffff !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    width: 34px !important;
+    height: 34px !important;
+    line-height: 34px !important;
+    text-align: center !important;
+    border-radius: 10px !important;
+}
+
+/* Bouton "+" — fond orange */
+/* À vérifier en DevTools */
+.navbar.topbar .btn-icon.btn-primary,
+header.navbar .btn-icon.btn-primary,
+.navbar.topbar a.btn[href*="add"],
+.navbar.topbar .dropdown-toggle.btn-primary {
+    background-color: var(--cid-orange) !important;
+    border-color: var(--cid-orange) !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    transition: background var(--cid-transition) !important;
+}
+
+.navbar.topbar .btn-icon.btn-primary:hover,
+header.navbar .btn-icon.btn-primary:hover {
+    background-color: #b8441a !important;
+    border-color: #b8441a !important;
 }
 
 /* === 3. ONGLETS TABLEAU DE BORD === */
 /* À vérifier en DevTools : nav-tabs */
 .nav-tabs {
     background: transparent !important;
-    border-bottom: 1px solid var(--sa-border) !important;
+    border-bottom: 1px solid var(--cid-border) !important;
     gap: 4px !important;
 }
 
 .nav-tabs .nav-link {
-    color: var(--sa-muted) !important;
+    color: var(--cid-muted) !important;
     border: none !important;
     border-bottom: 2px solid transparent !important;
     border-radius: 8px 8px 0 0 !important;
     padding: 0.75rem 1.25rem !important;
     font-weight: 500 !important;
     background: transparent !important;
+    transition: color var(--cid-transition), background var(--cid-transition) !important;
 }
 
+/* Tab hover — bleu acier */
 .nav-tabs .nav-link:hover {
-    color: var(--sa-accent) !important;
-    background-color: var(--sa-accent-light) !important;
+    color: var(--cid-blue) !important;
+    background-color: var(--cid-navy-light) !important;
 }
 
+/* Tab active — bordure orange en haut */
 .nav-tabs .nav-link.active {
-    background-color: var(--sa-card-bg) !important;
-    border-top: 2px solid var(--sa-accent) !important;
-    border-left: 1px solid var(--sa-border) !important;
-    border-right: 1px solid var(--sa-border) !important;
-    border-bottom: 1px solid var(--sa-card-bg) !important; /* over lap bottom border */
+    background-color: var(--cid-white) !important;
+    border-top: 2px solid var(--cid-orange) !important;
+    border-left: 1px solid var(--cid-border) !important;
+    border-right: 1px solid var(--cid-border) !important;
+    border-bottom: 1px solid var(--cid-white) !important;
+    border-radius: 8px 8px 0 0 !important;
     font-weight: 700 !important;
-    color: var(--sa-text) !important;
-    margin-bottom: -1px !important; /* overlap bottom border */
+    color: var(--cid-navy) !important;
+    margin-bottom: -1px !important;
 }
 
-/* === 4. ALERTE SÉCURITÉ (warning) === */
-.alert-warning {
-    background-color: #fffbeb !important;
-    border: none !important;
-    border-left: 3px solid var(--sa-warning) !important;
-    border-radius: 10px !important;
-    font-size: 13px !important;
-    color: #92400e !important;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.03) !important;
+/* === 4. FOND & CARDS CONTENU === */
+.card,
+.modal-content,
+.search_card {
+    background-color: var(--cid-white) !important;
+    border: 1px solid var(--cid-border) !important;
+    border-radius: var(--cid-radius) !important;
+    box-shadow: 0 4px 16px rgba(27, 58, 107, 0.08) !important;
+    /* overflow: hidden supprimé pour permettre l'affichage des dropdowns */
 }
 
-/* === 5. STATS DU PARC (Mini-cards) === */
+.card {
+    background-color: var(--cid-white) !important;
+    border-radius: var(--cid-radius) !important;
+    box-shadow: var(--cid-shadow) !important;
+    border: 1px solid var(--cid-border) !important;
+    margin-bottom: 1.5rem !important;
+    transition: box-shadow var(--cid-transition), border-color var(--cid-transition) !important;
+}
+
+.card:hover {
+    box-shadow: 0 4px 20px rgba(27, 58, 107, 0.13) !important;
+    border-color: var(--cid-blue) !important;
+}
+
+/* En-tête de carte — accent orange */
+.card-header {
+    background-color: transparent !important;
+    border-bottom: 2px solid var(--cid-orange) !important;
+    padding: 1rem 1.5rem !important;
+    font-weight: 600 !important;
+    color: var(--cid-navy) !important;
+}
+
+.card-body {
+    padding: 1.5rem !important;
+}
+
+/* === 5. BOUTONS === */
+/* Primaire — fond navy, hover bleu */
+.btn-primary {
+    background-color: var(--cid-navy) !important;
+    border-color: var(--cid-navy) !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    transition: background var(--cid-transition), box-shadow var(--cid-transition), transform var(--cid-transition) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--cid-blue) !important;
+    border-color: var(--cid-blue) !important;
+    box-shadow: 0 4px 12px rgba(46, 127, 186, 0.3) !important;
+}
+
+/* Secondaire — outline navy */
+.btn-secondary,
+.btn-outline-secondary {
+    background: transparent !important;
+    border: 1.5px solid var(--cid-navy) !important;
+    color: var(--cid-navy) !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    transition: background var(--cid-transition), color var(--cid-transition) !important;
+}
+
+.btn-secondary:hover,
+.btn-outline-secondary:hover {
+    background-color: var(--cid-navy-light) !important;
+    color: var(--cid-navy) !important;
+}
+
+/* Danger / CTA urgent — orange */
+.btn-danger,
+.btn-warning {
+    background-color: var(--cid-orange) !important;
+    border-color: var(--cid-orange) !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    transition: background var(--cid-transition) !important;
+}
+
+.btn-danger:hover,
+.btn-warning:hover {
+    background-color: #b8441a !important;
+    border-color: #b8441a !important;
+}
+
+/* === 6. STATS & COMPTEURS (tableau de bord) === */
 /* À vérifier en DevTools : search_config_top ou ajax_box nav-tabs */
 .search_config_top .nav-link,
 .tab-navigate .nav-link,
 [id*="tabspanel"] .nav-tabs .nav-link,
 .ticket-summary-tabs .nav-link {
-    background-color: var(--sa-card-bg) !important;
-    border-radius: 10px !important;
+    background-color: var(--cid-white) !important;
+    border-radius: 8px !important;
     padding: 0.75rem 1rem !important;
-    border: 1px solid var(--sa-border) !important;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+    border: 1px solid var(--cid-border) !important;
+    border-left: 3px solid var(--cid-orange) !important;
+    box-shadow: var(--cid-shadow) !important;
     display: inline-flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -232,71 +370,164 @@ header.navbar input[type="search"]:focus,
     gap: 4px !important;
     margin-right: 8px !important;
     margin-bottom: 8px !important;
+    transition: box-shadow var(--cid-transition), transform var(--cid-transition) !important;
 }
 
 /* Hover des mini-cards stats */
 .search_config_top .nav-link:hover,
 .tab-navigate .nav-link:hover,
 [id*="tabspanel"] .nav-tabs .nav-link:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+    box-shadow: 0 4px 16px rgba(27, 58, 107, 0.12) !important;
     transform: translateY(-2px) !important;
-    background-color: var(--sa-card-bg) !important; /* override tab hover bg */
 }
 
-/* Chiffre */
+/* Chiffre principal — navy, très gras */
 .search_config_top .nav-link strong,
 .search_config_top .nav-link .counter,
 .tab-navigate .nav-link strong,
 [id*="tabspanel"] .nav-tabs .nav-link strong {
     font-size: 18px !important;
     font-weight: 800 !important;
-    color: var(--sa-accent) !important;
+    color: var(--cid-navy) !important;
     line-height: 1 !important;
     display: block !important;
 }
 
-/* Label */
+/* Label sous chiffre — muted, uppercase */
 .search_config_top .nav-link span:not(.counter),
 .search_config_top .nav-link,
 .tab-navigate .nav-link,
 [id*="tabspanel"] .nav-tabs .nav-link {
     font-size: 11px !important;
     text-transform: uppercase !important;
-    color: var(--sa-muted) !important;
+    letter-spacing: 0.5px !important;
+    color: var(--cid-muted) !important;
 }
 
-/* Override color for active state of stats */
+/* Icône à gauche — bleu acier */
+.search_config_top .nav-link i,
+.tab-navigate .nav-link i,
+[id*="tabspanel"] .nav-tabs .nav-link i {
+    color: var(--cid-blue) !important;
+}
+
+/* Active state */
 .search_config_top .nav-link.active strong,
 .tab-navigate .nav-link.active strong {
-    color: var(--sa-text) !important;
+    color: var(--cid-navy) !important;
 }
 
-/* Les cartes générales */
-.card {
-    background-color: var(--sa-card-bg) !important;
-    border-radius: var(--sa-radius) !important;
-    box-shadow: var(--sa-shadow) !important;
-    border: 1px solid var(--sa-border) !important;
-    margin-bottom: 1.5rem !important;
+/* === 7. ALERTES === */
+/* Info */
+.alert-info {
+    background-color: var(--cid-navy-light) !important;
+    border: none !important;
+    border-left: 3px solid var(--cid-blue) !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    color: var(--cid-navy) !important;
+    box-shadow: 0 1px 4px rgba(27, 58, 107, 0.05) !important;
 }
 
-.card:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important;
+/* Warning (sécurité) */
+.alert-warning {
+    background-color: var(--cid-orange-light) !important;
+    border: none !important;
+    border-left: 3px solid var(--cid-orange) !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    color: #92400e !important;
+    box-shadow: 0 1px 4px rgba(27, 58, 107, 0.05) !important;
 }
 
-/* En-tête de carte */
-.card-header {
-    background-color: transparent !important;
-    border-bottom: 1px solid var(--sa-border) !important;
-    padding: 1rem 1.5rem !important;
+/* Succès */
+.alert-success {
+    background-color: #eafaf4 !important;
+    border: none !important;
+    border-left: 3px solid var(--cid-success) !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    color: #14532d !important;
+    box-shadow: 0 1px 4px rgba(27, 58, 107, 0.05) !important;
+}
+
+/* Danger */
+.alert-danger {
+    background-color: #fdf0ef !important;
+    border: none !important;
+    border-left: 3px solid var(--cid-danger) !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    color: #7f1d1d !important;
+    box-shadow: 0 1px 4px rgba(27, 58, 107, 0.05) !important;
+}
+
+/* === 8. TABLEAUX (liste tickets, assets...) === */
+.table th,
+table thead th {
+    background-color: #eef3fa !important;
+    color: var(--cid-navy) !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    padding: 0.6rem 0.75rem !important;
+    border-bottom: 1px solid var(--cid-border) !important;
+}
+
+.table tbody tr {
+    transition: background var(--cid-transition) !important;
+}
+
+.table tbody tr:hover {
+    background-color: var(--cid-navy-light) !important;
+}
+
+.table td,
+table tbody td {
+    border-bottom: 1px solid var(--cid-border) !important;
+    color: var(--cid-text) !important;
+    font-size: 13px !important;
+    padding: 0.6rem 0.75rem !important;
+    vertical-align: middle !important;
+}
+
+/* Liens dans tableaux */
+.table td a,
+table tbody td a {
+    color: var(--cid-blue) !important;
+    text-decoration: none !important;
+    transition: color var(--cid-transition) !important;
+}
+
+.table td a:hover,
+table tbody td a:hover {
+    color: var(--cid-orange) !important;
+}
+
+/* === 9. FORMULAIRES === */
+.form-control:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--cid-blue) !important;
+    box-shadow: 0 0 0 3px rgba(46, 127, 186, 0.15) !important;
+    outline: none !important;
+}
+
+label,
+.form-label {
+    color: var(--cid-navy) !important;
     font-weight: 600 !important;
 }
 
-.card-body {
-    padding: 1.5rem !important;
+.form-control::placeholder,
+input::placeholder,
+textarea::placeholder {
+    color: var(--cid-muted) !important;
 }
 
-/* === 7. SCROLLBAR CUSTOM === */
+/* === 10. SCROLLBAR CUSTOM === */
 ::-webkit-scrollbar {
     width: 6px !important;
     height: 6px !important;
@@ -307,15 +538,284 @@ header.navbar input[type="search"]:focus,
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #cbd5e1 !important;
+    background: var(--cid-border) !important;
     border-radius: 3px !important;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8 !important;
+    background: var(--cid-blue) !important;
 }
 
-/* === 8. TRANSITIONS GLOBALES === */
-a, button, .btn, input, select, textarea, .card, .nav-link {
-    transition: background var(--sa-transition), color var(--sa-transition), box-shadow var(--sa-transition), transform var(--sa-transition), border-color var(--sa-transition) !important;
+/* === TRANSITIONS GLOBALES === */
+a,
+button,
+.btn,
+input,
+select,
+textarea,
+.card,
+.nav-link {
+    transition: background var(--cid-transition), color var(--cid-transition), box-shadow var(--cid-transition), transform var(--cid-transition), border-color var(--cid-transition) !important;
+}
+
+/* === LIENS GLOBAUX === */
+a {
+    color: var(--cid-blue) !important;
+}
+
+a:hover {
+    color: var(--cid-orange) !important;
+}
+
+/* === BADGES === */
+.badge.bg-primary {
+    background-color: var(--cid-navy) !important;
+}
+
+.badge.bg-warning {
+    background-color: var(--cid-orange) !important;
+    color: #ffffff !important;
+}
+
+.badge.bg-success {
+    background-color: var(--cid-success) !important;
+}
+
+.badge.bg-danger {
+    background-color: var(--cid-danger) !important;
+}
+
+.badge.bg-info {
+    background-color: var(--cid-blue) !important;
+    color: #ffffff !important;
+}
+
+/* === DROPDOWNS === */
+.dropdown-menu {
+    border-radius: 10px !important;
+    border: 1px solid var(--cid-border) !important;
+    box-shadow: 0 8px 24px rgba(27, 58, 107, 0.12) !important;
+    font-size: 13px !important;
+    padding: 0.4rem !important;
+}
+
+.dropdown-item {
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    padding: 0.45rem 0.75rem !important;
+    color: var(--cid-text) !important;
+    transition: background var(--cid-transition) !important;
+}
+
+.dropdown-item:hover {
+    background: var(--cid-navy-light) !important;
+    color: var(--cid-blue) !important;
+}
+
+/* ============================================================
+   MICRO-INTERACTIONS & EFFETS UX
+   Charte CID — enrichissement visuel
+   ============================================================ */
+
+/* === SIDEBAR — Hover glissement gauche→droite === */
+.navbar-vertical .nav-link {
+    position: relative !important;
+    overflow: hidden !important;
+    z-index: 1 !important;
+}
+
+.navbar-vertical .nav-link::before {
+    content: '' !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 0 !important;
+    background: rgba(255, 255, 255, 0.07) !important;
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border-radius: 0 8px 8px 0 !important;
+    z-index: -1 !important;
+}
+
+.navbar-vertical .nav-link:hover::before {
+    width: 100% !important;
+}
+
+/* === SIDEBAR — Icônes rotation + scale au hover === */
+.navbar-vertical .nav-link:hover .ti,
+.navbar-vertical .nav-link:hover svg,
+.navbar-vertical .nav-link:hover i {
+    transform: scale(1.18) rotate(-4deg) !important;
+    transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    color: var(--cid-orange) !important;
+}
+
+/* === CARDS — Élévation hover === */
+.card {
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.2s ease !important;
+}
+
+.card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 12px 32px rgba(27, 58, 107, 0.14) !important;
+}
+
+.card:active {
+    transform: translateY(-1px) scale(0.995) !important;
+    box-shadow: 0 4px 12px rgba(27, 58, 107, 0.10) !important;
+}
+
+/* === CARD HEADER — Trait gradient animé === */
+.card-header {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.card-header::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 0 !important;
+    height: 2px !important;
+    background: linear-gradient(90deg, #d4521c, #2e7fba) !important;
+    transition: width 0.35s ease !important;
+}
+
+.card:hover .card-header::after {
+    width: 100% !important;
+}
+
+/* === BOUTON PRIMAIRE — Hover simple === */
+.btn-primary {
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+
+.btn-primary:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px rgba(27, 58, 107, 0.28) !important;
+}
+
+.btn-primary:active {
+    transform: translateY(0) scale(0.97) !important;
+}
+
+/* === TABLEAUX — Animation d'apparition supprimée pour éviter le masquage des données === */
+
+/* === TABLEAUX — Hover ligne trait orange === */
+.table tbody tr {
+    border-left: 3px solid transparent !important;
+    transition: background 0.15s ease, border-color 0.15s ease !important;
+}
+
+.table tbody tr:hover {
+    border-left-color: var(--cid-orange) !important;
+}
+
+/* === FORMULAIRES — Focus glow === */
+.form-control:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    background: #fafcff !important;
+    box-shadow: 0 0 0 3px rgba(46, 127, 186, 0.15), 0 1px 4px rgba(27, 58, 107, 0.08) !important;
+}
+
+/* === BADGES — Scale hover === */
+.badge {
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.badge:hover {
+    transform: scale(1.08) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* === NAVBAR — Search bar expand au focus === */
+/* À vérifier en DevTools */
+header.navbar input[type="search"],
+#search-input {
+    transition: width 0.3s ease, background 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+header.navbar input[type="search"]:focus,
+#search-input:focus {
+    width: 280px !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 0 0 2px rgba(46, 127, 186, 0.5) !important;
+}
+
+/* === AVATAR — Scale + rotation hover === */
+.navbar .avatar {
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.navbar .avatar:hover {
+    transform: scale(1.12) rotate(5deg) !important;
+}
+
+/* === PAGE ENTRÉE — Fade + slide === */
+.page-body {
+    animation: page-enter 0.35s ease forwards !important;
+}
+
+@keyframes page-enter {
+    from {
+        opacity: 0 !important;
+        transform: translateY(12px) !important;
+    }
+
+    to {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+}
+
+/* === SKELETON LOADER === */
+.skeleton {
+    background: linear-gradient(90deg, #eef3fa 25%, #dde5f0 50%, #eef3fa 75%) !important;
+    background-size: 200% 100% !important;
+    animation: shimmer 1.4s infinite !important;
+    border-radius: 6px !important;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0 !important;
+    }
+
+    100% {
+        background-position: -200% 0 !important;
+    }
+}
+
+/* === COMPTEURS — Support CSS pour animation JS === */
+[data-counter] {
+    transition: color 0.1s ease !important;
+}
+
+[data-counter].counting {
+    color: var(--cid-blue) !important;
+}
+
+[data-counter].done {
+    color: var(--cid-navy) !important;
+}
+
+/* === SCROLLBAR CUSTOM GLOBALE === */
+* {
+    scrollbar-width: thin !important;
+    scrollbar-color: #dde5f0 transparent !important;
+}
+
+/* === ACCESSIBILITÉ — Réduction des animations === */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+    }
 }

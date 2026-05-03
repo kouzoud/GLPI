@@ -1,29 +1,33 @@
 /* ============================================================
    SELF-SERVICE (Employé) — Profil ID: 1
-   Plugin monplugin v1.2.2
+   Plugin monplugin — Charte graphique CID
    Sélecteurs extraits du HTML source réel GLPI
    body.horizontal-layout.helpdesk
-   Style : Professionnel / Friendly — Bleu corporate, blanc, vague de transition
+   Style : CID Corporate — Navy, Orange accent, Bleu acier
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 /* ============================================================
-   VARIABLES
+   VARIABLES — Palette CID officielle
    ============================================================ */
 :root {
-    --emp-blue: #2563eb;
-    --emp-blue-light: #eff6ff;
-    --emp-blue-mid: #dbeafe;
-    --emp-navy: #1e3a5f;
+    --emp-blue: #2e7fba;
+    --emp-blue-light: #eef3fa;
+    --emp-blue-mid: #dde5f0;
+    --emp-navy: #1b3a6b;
     --emp-white: #ffffff;
-    --emp-bg: #f1f5f9;
-    --emp-text: #1e293b;
-    --emp-muted: #64748b;
-    --emp-border: #e2e8f0;
-    --emp-card-hover: #f8faff;
+    --emp-bg: #f4f7fb;
+    --emp-text: #1b3a6b;
+    --emp-muted: #5a7499;
+    --emp-border: #dde5f0;
+    --emp-card-hover: #eef3fa;
+    --emp-orange: #d4521c;
+    --emp-orange-light: #fff3ee;
+    --emp-success: #1a8c6e;
+    --emp-danger: #c0392b;
     --emp-radius: 14px;
-    --emp-shadow: 0 2px 12px rgba(37, 99, 235, 0.08);
+    --emp-shadow: 0 2px 12px rgba(27, 58, 107, 0.08);
     --emp-transition: 0.22s ease;
 }
 
@@ -42,7 +46,7 @@ body.horizontal-layout.helpdesk {
    ============================================================ */
 header.navbar.topbar,
 .navbar.navbar-dark.topbar {
-    background: linear-gradient(90deg, var(--emp-navy) 0%, #1a4080 100%) !important;
+    background: linear-gradient(90deg, var(--emp-navy) 0%, #1e4278 100%) !important;
     border-bottom: none !important;
     box-shadow: 0 2px 16px rgba(0, 0, 0, 0.18) !important;
     padding: 0.45rem 1rem !important;
@@ -149,7 +153,7 @@ body.horizontal-layout.helpdesk .helpdesk-home-container {
 
 /* Le hero reste FERMÉ — la search bar ne dépasse pas du hero */
 .search-banner {
-    background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 40%, #2563eb 70%, #3b82f6 100%) !important;
+    background: linear-gradient(135deg, #1b3a6b 0%, #1e4278 40%, #2e7fba 70%, #4a9ad4 100%) !important;
     background-size: 200% 200% !important;
     animation: heroPulse 8s ease infinite !important;
     padding: 3rem 1rem !important;
@@ -185,7 +189,7 @@ body.horizontal-layout.helpdesk .helpdesk-home-container {
     left: -60px !important;
     width: 300px !important;
     height: 300px !important;
-    background: radial-gradient(circle, rgba(96, 165, 250, 0.18) 0%, transparent 65%) !important;
+    background: radial-gradient(circle, rgba(46, 127, 186, 0.18) 0%, transparent 65%) !important;
     border-radius: 50% !important;
     pointer-events: none !important;
     z-index: 0 !important;
@@ -200,7 +204,7 @@ body.horizontal-layout.helpdesk .helpdesk-home-container {
     right: -40px !important;
     width: 240px !important;
     height: 240px !important;
-    background: radial-gradient(circle, rgba(56, 189, 248, 0.13) 0%, transparent 65%) !important;
+    background: radial-gradient(circle, rgba(212, 82, 28, 0.10) 0%, transparent 65%) !important;
     border-radius: 50% !important;
     pointer-events: none !important;
     z-index: 0 !important;
@@ -371,7 +375,7 @@ section.tiles-banner .card {
     border: 1.5px solid var(--emp-border) !important;
     border-radius: 16px !important;
     background: var(--emp-white) !important;
-    box-shadow: 0 1px 4px rgba(37, 99, 235, 0.06), 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+    box-shadow: 0 1px 4px rgba(27, 58, 107, 0.06), 0 4px 16px rgba(0, 0, 0, 0.04) !important;
     text-decoration: none !important;
     color: var(--emp-text) !important;
     position: relative !important;
@@ -387,9 +391,9 @@ section.tiles-banner .card {
     position: absolute !important;
     inset: 0 !important;
     background: linear-gradient(135deg,
-            rgba(37, 99, 235, 0) 0%,
-            rgba(37, 99, 235, 0.04) 50%,
-            rgba(37, 99, 235, 0) 100%) !important;
+            rgba(27, 58, 107, 0) 0%,
+            rgba(27, 58, 107, 0.04) 50%,
+            rgba(27, 58, 107, 0) 100%) !important;
     opacity: 0 !important;
     transition: opacity 0.3s ease !important;
     pointer-events: none !important;
@@ -403,7 +407,7 @@ section.tiles-banner .card {
 
 .tiles-banner a.card:hover {
     transform: translateY(-6px) scale(1.01) !important;
-    box-shadow: 0 12px 32px rgba(37, 99, 235, 0.18), 0 2px 8px rgba(37, 99, 235, 0.08) !important;
+    box-shadow: 0 12px 32px rgba(27, 58, 107, 0.18), 0 2px 8px rgba(27, 58, 107, 0.08) !important;
     border-color: var(--emp-blue) !important;
 }
 
@@ -426,7 +430,7 @@ section.tiles-banner .card {
 
 .tiles-banner a.card:hover {
     transform: translateY(-4px) !important;
-    box-shadow: 0 8px 28px rgba(37, 99, 235, 0.15) !important;
+    box-shadow: 0 8px 28px rgba(27, 58, 107, 0.15) !important;
     border-color: var(--emp-blue) !important;
     background: var(--emp-card-hover) !important;
 }
@@ -729,11 +733,11 @@ body.horizontal-layout.helpdesk .helpdesk-home-container {
 
 /* --- En-tête de page (titre "Demander un service") --- */
 body.horizontal-layout.helpdesk .page-header {
-    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 70%, #3b82f6 100%) !important;
+    background: linear-gradient(135deg, #1b3a6b 0%, #1e4278 70%, #2e7fba 100%) !important;
     padding: 1.8rem 0 !important;
     margin: 0 !important;
     border-bottom: none !important;
-    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2) !important;
+    box-shadow: 0 4px 16px rgba(27, 58, 107, 0.2) !important;
 }
 
 body.horizontal-layout.helpdesk .page-header h1.page.title,
@@ -774,7 +778,7 @@ body.horizontal-layout.helpdesk .page-body.mt-3 {
     border: 1.5px solid var(--emp-border) !important;
     border-radius: 16px !important;
     background: #fff !important;
-    box-shadow: 0 2px 16px rgba(37, 99, 235, 0.07) !important;
+    box-shadow: 0 2px 16px rgba(27, 58, 107, 0.07) !important;
     overflow: visible !important;
     animation: cardFadeUp 0.4s ease both !important;
 }
@@ -824,7 +828,7 @@ body.horizontal-layout.helpdesk .page-body.mt-3 {
 }
 
 .form-renderer section[data-glpi-form-renderer-question] h3 .text-danger {
-    color: #ef4444 !important;
+    color: var(--emp-danger) !important;
     font-size: 14px !important;
 }
 
@@ -844,7 +848,7 @@ body.horizontal-layout.helpdesk .page-body.mt-3 {
 .form-renderer .form-control:focus,
 .form-renderer input[type="text"]:focus {
     border-color: var(--emp-blue) !important;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
+    box-shadow: 0 0 0 3px rgba(46, 127, 186, 0.12) !important;
     background: #fff !important;
     outline: none !important;
 }
@@ -853,7 +857,8 @@ body.horizontal-layout.helpdesk .page-body.mt-3 {
 .form-renderer .select2-selection--single {
     border: 1.5px solid var(--emp-border) !important;
     border-radius: 10px !important;
-    height: 42px !important; /* Slightly taller for better UX */
+    height: 42px !important;
+    /* Slightly taller for better UX */
     background: #f8fafc !important;
     display: flex !important;
     align-items: center !important;
@@ -870,7 +875,7 @@ body.horizontal-layout.helpdesk .page-body.mt-3 {
 .form-renderer .select2-container--default.select2-container--focus .select2-selection--single,
 .form-renderer .select2-container--default.select2-container--open .select2-selection--single {
     border-color: var(--emp-blue) !important;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
+    box-shadow: 0 0 0 3px rgba(46, 127, 186, 0.12) !important;
     background: #fff !important;
 }
 
@@ -892,7 +897,7 @@ body.horizontal-layout.helpdesk .page-body.mt-3 {
 
 .form-renderer .tox-tinymce:focus-within {
     border-color: var(--emp-blue) !important;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
+    box-shadow: 0 0 0 3px rgba(46, 127, 186, 0.12) !important;
 }
 
 .form-renderer .tox-toolbar-overlord,
@@ -928,22 +933,22 @@ body.horizontal-layout.helpdesk .page-body.mt-3 {
 /* --- Bouton Envoyer --- */
 button[data-glpi-form-renderer-action="submit"],
 .form-renderer .btn-primary[data-glpi-form-renderer-action="submit"] {
-    background: linear-gradient(135deg, var(--emp-blue) 0%, #1e3a8a 100%) !important;
+    background: linear-gradient(135deg, var(--emp-blue) 0%, var(--emp-navy) 100%) !important;
     border: none !important;
     border-radius: 12px !important;
     padding: 0.7rem 2rem !important;
     font-size: 14px !important;
     font-weight: 700 !important;
     color: #fff !important;
-    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3) !important;
+    box-shadow: 0 4px 16px rgba(27, 58, 107, 0.3) !important;
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s !important;
     cursor: pointer !important;
     letter-spacing: 0.2px !important;
 }
 
 button[data-glpi-form-renderer-action="submit"]:hover {
-    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important;
-    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4) !important;
+    background: linear-gradient(135deg, #2e7fba 0%, #1b3a6b 100%) !important;
+    box-shadow: 0 8px 24px rgba(27, 58, 107, 0.4) !important;
     transform: translateY(-2px) !important;
 }
 
@@ -959,11 +964,11 @@ button[data-glpi-form-renderer-action="submit"]:active {
 .form-renderer [data-glpi-form-renderer-success] .empty-title {
     font-size: 1.1rem !important;
     font-weight: 700 !important;
-    color: #15803d !important;
+    color: var(--emp-success) !important;
 }
 
 .form-renderer [data-glpi-form-renderer-success] .empty-title svg {
-    color: #16a34a !important;
+    color: var(--emp-success) !important;
 }
 
 .form-renderer [data-glpi-form-renderer-success] .empty-subtitle {
@@ -981,7 +986,7 @@ button[data-glpi-form-renderer-action="submit"]:active {
     border-radius: 10px !important;
     font-size: 13px !important;
     font-weight: 600 !important;
-    background: linear-gradient(135deg, var(--emp-blue) 0%, #1e3a8a 100%) !important;
+    background: linear-gradient(135deg, var(--emp-blue) 0%, var(--emp-navy) 100%) !important;
     border: none !important;
 }
 
@@ -991,4 +996,280 @@ button[data-glpi-form-renderer-action="submit"]:active {
     border-radius: 4px !important;
     height: 6px !important;
     transition: width 0.3s ease !important;
+}
+
+/* ============================================================
+   PAGE DE RECHERCHE / LISTE DES TICKETS (EMPLOYÉ)
+   ============================================================ */
+
+/* Le fond global et l'espacement */
+.search-container {
+    padding: 1.5rem 0 !important;
+}
+
+/* La carte principale contenant la recherche et la table */
+.card.search-card {
+    background: var(--emp-white) !important;
+    border: 1px solid var(--emp-border) !important;
+    border-radius: var(--emp-radius) !important;
+    box-shadow: var(--emp-shadow) !important;
+    margin-bottom: 2rem !important;
+    /* overflow: hidden supprimé pour permettre l'affichage des dropdowns (Trier, Rechercher) */
+}
+
+/* Le header de la carte (barres d'outils) */
+.card-header.search-header {
+    background-color: var(--emp-white) !important;
+    border-bottom: 1px solid var(--emp-border) !important;
+    padding: 1rem 1.5rem !important;
+}
+
+/* Table de résultats */
+.table.search-results {
+    margin-bottom: 0 !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    width: 100% !important;
+}
+
+/* En-tête de la table */
+.table.search-results thead th {
+    background-color: var(--emp-bg) !important;
+    color: var(--emp-muted) !important;
+    font-weight: 600 !important;
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    padding: 1rem 1.5rem !important;
+    border-bottom: 1px solid var(--emp-border) !important;
+    border-top: none !important;
+    vertical-align: middle !important;
+    white-space: nowrap !important;
+}
+
+/* Lignes de la table */
+.table.search-results tbody tr {
+    background-color: var(--emp-white) !important;
+    transition: var(--emp-transition) !important;
+}
+
+.table.search-results tbody tr:hover {
+    background-color: var(--emp-card-hover) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: inset 3px 0 0 0 var(--emp-orange) !important;
+    /* Ligne d'accentuation orange CID au hover */
+}
+
+/* Cellules de la table */
+.table.search-results tbody td {
+    padding: 1rem 1.5rem !important;
+    border-bottom: 1px solid var(--emp-border) !important;
+    color: var(--emp-text) !important;
+    font-size: 13px !important;
+    vertical-align: middle !important;
+}
+
+/* Enlever la bordure du dernier élément */
+.table.search-results tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+/* Liens dans la table (ex: Titre du ticket) */
+.table.search-results tbody td a {
+    color: var(--emp-text) !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: color 0.2s ease !important;
+}
+
+.table.search-results tbody td a:hover {
+    color: var(--emp-blue) !important;
+}
+
+/* Badges de statut */
+.itilstatus {
+    border-radius: 50% !important;
+}
+
+/* Boutons dans le header de recherche */
+.search-controls .btn-ghost-secondary {
+    color: var(--emp-muted) !important;
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: 8px !important;
+    transition: var(--emp-transition) !important;
+}
+
+.search-controls .btn-ghost-secondary:hover {
+    background: var(--emp-bg) !important;
+    color: var(--emp-text) !important;
+    border-color: var(--emp-border) !important;
+}
+
+.search-controls .btn-primary {
+    background-color: var(--emp-navy) !important;
+    border-color: var(--emp-navy) !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    padding: 0.4rem 1rem !important;
+    box-shadow: 0 2px 4px rgba(27, 58, 107, 0.2) !important;
+    transition: var(--emp-transition) !important;
+}
+
+.search-controls .btn-primary:hover {
+    background-color: var(--emp-blue) !important;
+    border-color: var(--emp-blue) !important;
+    box-shadow: 0 4px 8px rgba(27, 58, 107, 0.3) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Pagination / Footer de la recherche */
+.search-footer {
+    background-color: var(--emp-white) !important;
+    border-top: 1px solid var(--emp-border) !important;
+    padding: 1rem 1.5rem !important;
+    border-bottom-left-radius: var(--emp-radius) !important;
+    border-bottom-right-radius: var(--emp-radius) !important;
+}
+
+/* Select de pagination */
+.search-limit-dropdown {
+    border: 1px solid var(--emp-border) !important;
+    border-radius: 6px !important;
+    padding: 0.3rem 0.5rem !important;
+    font-size: 13px !important;
+    background-color: var(--emp-bg) !important;
+    color: var(--emp-text) !important;
+    cursor: pointer !important;
+    transition: border-color 0.2s ease !important;
+}
+
+.search-limit-dropdown:focus {
+    border-color: var(--emp-blue) !important;
+    outline: none !important;
+}
+
+/* ============================================================
+   MICRO-INTERACTIONS & EFFETS UX — Self-Service CID
+   Effets plus doux, focus sur les CTA
+   ============================================================ */
+
+/* === CARDS — Élévation hover douce === */
+.tiles-banner a.card,
+section.tiles-banner .card {
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.2s ease !important;
+}
+
+.tiles-banner a.card:active {
+    transform: translateY(-1px) scale(0.995) !important;
+}
+
+/* === BOUTON PRIMAIRE — Hover simple === */
+button[data-glpi-form-renderer-action="submit"],
+.search-controls .btn-primary,
+.btn-primary {
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+button[data-glpi-form-renderer-action="submit"]:hover,
+.search-controls .btn-primary:hover,
+.btn-primary:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(27, 58, 107, 0.2) !important;
+}
+
+/* === TABLEAUX — Animation d'apparition supprimée pour éviter le masquage des données === */
+
+/* === FORMULAIRES — Focus glow === */
+.form-renderer .form-control:focus,
+.form-renderer input[type="text"]:focus,
+.form-renderer textarea:focus {
+    background: #fafcff !important;
+    box-shadow: 0 0 0 3px rgba(46, 127, 186, 0.15), 0 1px 4px rgba(27, 58, 107, 0.08) !important;
+}
+
+/* === BADGES — Scale hover === */
+.badge,
+.itilstatus {
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.badge:hover,
+.itilstatus:hover {
+    transform: scale(1.08) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* === AVATAR — Scale hover === */
+.navbar.topbar .avatar {
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.navbar.topbar .avatar:hover {
+    transform: scale(1.12) rotate(5deg) !important;
+}
+
+/* === SKELETON LOADER === */
+.skeleton {
+    background: linear-gradient(90deg, #eef3fa 25%, #dde5f0 50%, #eef3fa 75%) !important;
+    background-size: 200% 100% !important;
+    animation: shimmer 1.4s infinite !important;
+    border-radius: 6px !important;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0 !important;
+    }
+
+    100% {
+        background-position: -200% 0 !important;
+    }
+}
+
+/* === COMPTEURS — Support CSS pour animation JS === */
+[data-counter] {
+    transition: color 0.1s ease !important;
+}
+
+[data-counter].counting {
+    color: var(--emp-blue) !important;
+}
+
+[data-counter].done {
+    color: var(--emp-navy) !important;
+}
+
+/* === SCROLLBAR CUSTOM === */
+* {
+    scrollbar-width: thin !important;
+    scrollbar-color: #dde5f0 transparent !important;
+}
+
+*::-webkit-scrollbar {
+    width: 6px !important;
+    height: 6px !important;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #dde5f0 !important;
+    border-radius: 3px !important;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: var(--emp-blue) !important;
+}
+
+/* === ACCESSIBILITÉ — Réduction des animations === */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+    }
 }
