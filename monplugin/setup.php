@@ -1,6 +1,6 @@
 <?php
 // Cache busting — incrémenter à chaque déploiement
-define('PLUGIN_MONPLUGIN_VERSION', '1.0.3');
+define('PLUGIN_MONPLUGIN_VERSION', '1.0.5');
 
 function plugin_init_monplugin()
 {
@@ -12,22 +12,10 @@ function plugin_init_monplugin()
 
     $PLUGIN_HOOKS['display_login']['monplugin'] = 'plugin_monplugin_display_login';
 
-    // Hook pour afficher le lien "Carte des sites" en haut des pages
-    $PLUGIN_HOOKS['head']['monplugin'] = 'plugin_monplugin_add_menu_content';
+    // Hook standard GLPI pour ajouter au menu "Assistance"
+    $PLUGIN_HOOKS['menu_toadd']['monplugin'] = ['helpdesk' => 'PluginMonpluginDashboard'];
 }
 
-function plugin_monplugin_getMenuContent()
-{
-    return [
-        'helpdesk' => [
-            'geodashboard' => [
-                'title' => 'Carte des sites',
-                'page' => Plugin::getWebDir('monplugin', false) . '/front/dashboard.php',
-                'icon' => 'ti ti-map-2'
-            ]
-        ]
-    ];
-}
 
 function plugin_version_monplugin()
 {

@@ -34,9 +34,9 @@ const CIDMap = (function() {
         // Re-enable scroll wheel zoom on click/focus if needed or just leave disabled
         map.once('focus', function() { map.scrollWheelZoom.enable(); });
 
-        // Layer OSM Standard
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        // Layer Esri World Street Map
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
             maxZoom: 18
         }).addTo(map);
 

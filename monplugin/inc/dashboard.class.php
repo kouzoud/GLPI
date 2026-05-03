@@ -18,6 +18,20 @@ class PluginMonpluginDashboard extends \CommonGLPI {
         return 'Carte des sites';
     }
 
+    public static function getIcon() {
+        return "ti ti-map-2";
+    }
+
+    public static function getMenuContent() {
+        $menu = [];
+        if (static::canView()) {
+            $menu['title'] = self::getMenuName();
+            $menu['page']  = Plugin::getWebDir('monplugin', false) . '/front/dashboard.php';
+            $menu['icon']  = self::getIcon();
+        }
+        return $menu;
+    }
+
     public static function canView(): bool {
         // Accès seulement pour Admin (ID 2) et Super-Admin (ID 4)
         if (!isset($_SESSION['glpiactiveprofile']['id'])) {
@@ -41,52 +55,76 @@ class PluginMonpluginDashboard extends \CommonGLPI {
         $type_filter = isset($filters['type']) ? (int)$filters['type'] : null;
         $status_filter = isset($filters['status']) && is_array($filters['status']) ? array_map('intval', $filters['status']) : null;
         
-        $sql = "
-            SELECT
-                loc.id,
-                loc.name,
-                loc.latitude,
-                loc.longitude,
-                SUM(CASE WHEN t.type = 1 THEN 1 ELSE 0 END) AS incidents_open,
-                SUM(CASE WHEN t.type = 2 THEN 1 ELSE 0 END) AS requests_open,
-                SUM(CASE WHEN t.status IN (1,2,3,4) THEN 1 ELSE 0 END) AS total_open,
-                SUM(CASE WHEN t.status IN (5,6) THEN 1 ELSE 0 END) AS total_closed
-            FROM glpi_locations loc
-            LEFT JOIN glpi_tickets t
-                ON t.locations_id = loc.id
-                AND t.is_deleted = 0";
-                
+        // Construction du critère au format tableau pour GLPI 10+
+        $criteria = [
+            'SELECT' => [
+                'loc.id',
+                'loc.name',
+                'loc.latitude',
+                'loc.longitude',
+                new \QueryExpression('SUM(CASE WHEN t.type = 1 THEN 1 ELSE 0 END) AS incidents_open'),
+                new \QueryExpression('SUM(CASE WHEN t.type = 2 THEN 1 ELSE 0 END) AS requests_open'),
+                new \QueryExpression('SUM(CASE WHEN t.status IN (1,2,3,4) THEN 1 ELSE 0 END) AS total_open'),
+                new \QueryExpression('SUM(CASE WHEN t.status IN (5,6) THEN 1 ELSE 0 END) AS total_closed')
+            ],
+            'FROM' => 'glpi_locations AS loc',
+            'LEFT JOIN' => [
+                'glpi_tickets AS t' => [
+                    'FKEY' => [
+                        't'   => 'locations_id',
+                        'loc' => 'id'
+                    ],
+                    // Condition additionnelle dans le JOIN
+                    ['t.is_deleted' => 0]
+                ]
+            ],
+            'WHERE' => [
+                ['NOT' => ['loc.latitude' => null]],
+                ['NOT' => ['loc.latitude' => '']],
+                ['NOT' => ['loc.longitude' => null]],
+                ['NOT' => ['loc.longitude' => '']]
+            ],
+            'GROUPBY' => [
+                'loc.id',
+                'loc.name',
+                'loc.latitude',
+                'loc.longitude'
+            ],
+            'ORDERBY' => 'total_open DESC'
+        ];
+
+        // Ajout dynamique des filtres dans le LEFT JOIN (pour ne compter que les tickets filtrés)
         if ($type_filter) {
-            $sql .= " AND t.type = " . $type_filter;
+            $criteria['LEFT JOIN']['glpi_tickets AS t'][] = ['t.type' => $type_filter];
         }
         
         if ($status_filter) {
-            $sql .= " AND t.status IN (" . implode(',', $status_filter) . ")";
+            $criteria['LEFT JOIN']['glpi_tickets AS t'][] = ['t.status' => $status_filter];
         }
-        
-        // Entity restrict omitted for GLPI 11 compatibility safety
-        
-        $sql .= "
-            WHERE loc.is_deleted = 0
-                AND loc.latitude IS NOT NULL
-                AND loc.longitude IS NOT NULL
-            GROUP BY loc.id, loc.name, loc.latitude, loc.longitude
-            ORDER BY total_open DESC
-        ";
 
         try {
-            $result = $DB->request($sql);
+            $iterator = $DB->request($criteria);
             $data = [];
             
-            foreach ($result as $row) {
+            foreach ($iterator as $row) {
                 $data[] = $row;
             }
         } catch (\Exception $e) {
             error_log("GeoDashboard SQL Error: " . $e->getMessage());
-            $data = [];
+            // Retourner l'erreur comme un faux site pour le débogage
+            return [[
+                'id' => 'error',
+                'name' => 'ERREUR BUILDER: ' . $e->getMessage(),
+                'latitude' => 33.9,
+                'longitude' => -6.8,
+                'incidents_open' => 999,
+                'requests_open' => 999,
+                'total_open' => 999,
+                'total_closed' => 0
+            ]];
         }
         
-        // Fallback sites if no data from DB (Section 3 constraints)
+        // Fallback sites if no data from DB
         if (empty($data)) {
             $data = [
                 [

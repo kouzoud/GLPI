@@ -4,6 +4,10 @@ include_once('../inc/dashboard.class.php');
 
 Session::checkLoginUser();
 
+if (!PluginMonpluginDashboard::canView()) {
+    Html::displayRightError();
+}
+
 // ===== INJECTION CDN LEAFLET =====
 // (Injectées directement ici pour éviter le préfixage GLPI)
 $plugin_version = defined('PLUGIN_MONPLUGIN_VERSION') ? PLUGIN_MONPLUGIN_VERSION : '1.7.1';
