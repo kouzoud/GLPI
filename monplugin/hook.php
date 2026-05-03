@@ -37,6 +37,10 @@ function plugin_monplugin_inject_css()
         // Injection du JS d'effets pour tous les profils reconnus
         $js_file = 'js/effects.js';
         $PLUGIN_HOOKS['add_javascript']['monplugin'] = [$js_file];
+
+        // Fix modaux mot de passe : les déplace vers <body> pour que
+        // position:fixed fonctionne correctement (hors du DOM du formulaire)
+        $PLUGIN_HOOKS['add_javascript']['monplugin'][] = 'js/modal-fix.js';
     }
 
     // === DASHBOARD GÉOGRAPHIQUE — Assets locaux ===

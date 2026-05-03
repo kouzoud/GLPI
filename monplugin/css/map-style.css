@@ -84,59 +84,149 @@
 .kpi-demande  { --accent: #2e7fba; --accent-light: #eff6ff; }
 .kpi-sites    { --accent: #1a8c6e; --accent-light: #eafaf4; }
 
-/* === BARRE DE FILTRES ET COMPTEURS === */
+/* === BARRE DE FILTRES PRO — PLEINE LARGEUR === */
 .geo-filter-bar {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-    flex-wrap: wrap;
+    display        : flex;
+    align-items    : center;
+    width          : 100%;
+    background     : #ffffff;
+    border         : 1px solid var(--cid-border);
+    border-radius  : 14px;
+    padding        : 8px 12px;
+    margin-bottom  : 1rem;
+    box-shadow     : 0 2px 12px rgba(27,58,107,0.06);
+    gap            : 0;
 }
 
-.geo-filter-btn {
-    border: 1px solid var(--cid-border);
-    background: #fff;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--cid-navy);
-    cursor: pointer;
-    transition: all 0.2s;
-    display: inline-flex;
+/* Groupe des boutons type (gauche) */
+.geo-filter-group {
+    display    : flex;
+    align-items: center;
+    gap        : 4px;
+    background : var(--cid-navy-light);
+    border-radius: 10px;
+    padding    : 4px;
+}
+
+/* Séparateur flexible entre groupe et select */
+.geo-filter-separator {
+    flex: 1;
+}
+
+/* Zone droite (select statut) */
+.geo-filter-right {
+    display    : flex;
     align-items: center;
 }
 
+/* Boutons de filtre type */
+.geo-filter-btn {
+    display        : inline-flex;
+    align-items    : center;
+    gap            : 6px;
+    border         : none;
+    background     : transparent;
+    padding        : 7px 14px;
+    border-radius  : 8px;
+    font-size      : 13px;
+    font-weight    : 600;
+    color          : var(--cid-muted);
+    cursor         : pointer;
+    transition     : all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space    : nowrap;
+    letter-spacing : 0.01em;
+}
+
+.geo-filter-btn i {
+    font-size  : 15px;
+    flex-shrink: 0;
+}
+
 .geo-filter-btn:hover {
-    background: var(--cid-navy-light);
+    color     : var(--cid-navy);
+    background: rgba(255,255,255,0.7);
 }
 
 .geo-filter-btn.active {
-    background: var(--cid-navy);
-    color: #fff;
-    border-color: var(--cid-navy);
+    background  : #ffffff;
+    color       : var(--cid-navy);
+    box-shadow  : 0 2px 8px rgba(27,58,107,0.12), 0 1px 2px rgba(27,58,107,0.06);
 }
 
+/* Badge count */
 .geo-filter-btn .badge-count {
-    display       : inline-flex;
-    align-items   : center;
+    display        : inline-flex;
+    align-items    : center;
     justify-content: center;
-    min-width     : 20px;
-    height        : 20px;
-    border-radius : 10px;
-    background    : rgba(0,0,0,0.12);
-    color         : inherit;
-    font-size     : 11px;
-    font-weight   : 700;
-    margin-left   : 5px;
-    padding       : 0 5px;
+    min-width      : 22px;
+    height         : 20px;
+    border-radius  : 10px;
+    background     : rgba(27,58,107,0.08);
+    color          : var(--cid-navy);
+    font-size      : 11px;
+    font-weight    : 800;
+    padding        : 0 5px;
+    transition     : all 0.22s;
 }
 
 .geo-filter-btn.active .badge-count {
-    background: rgba(255,255,255,0.25);
+    background: var(--cid-navy);
+    color     : #ffffff;
 }
 
-select.geo-filter-btn {
-    outline: none;
+/* Incidents → orange */
+.geo-filter-btn[data-type="1"].active {
+    color: var(--cid-orange);
+}
+.geo-filter-btn[data-type="1"].active .badge-count {
+    background: var(--cid-orange);
+    color     : #ffffff;
+}
+
+/* Demandes → bleu */
+.geo-filter-btn[data-type="2"].active {
+    color: var(--cid-blue);
+}
+.geo-filter-btn[data-type="2"].active .badge-count {
+    background: var(--cid-blue);
+    color     : #ffffff;
+}
+
+/* === SELECT STATUT CUSTOM === */
+.geo-select-wrapper {
+    display     : flex;
+    align-items : center;
+}
+
+.geo-status-select {
+    appearance       : none;
+    -webkit-appearance: none;
+    border           : 1.5px solid var(--cid-border);
+    border-radius    : 10px;
+    background-color : var(--cid-bg);
+    background-image : url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235a7499' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat  : no-repeat;
+    background-position: right 10px center;
+    background-size    : 15px;
+    padding          : 8px 36px 8px 14px;
+    font-size        : 13px;
+    font-weight      : 600;
+    color            : var(--cid-navy);
+    cursor           : pointer;
+    outline          : none;
+    transition       : border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+    min-width        : 185px;
+}
+
+.geo-status-select:hover {
+    border-color    : var(--cid-blue);
+    background-color: #ffffff;
+}
+
+.geo-status-select:focus {
+    border-color    : var(--cid-blue);
+    background-color: #ffffff;
+    box-shadow      : 0 0 0 3px rgba(46,127,186,0.15);
 }
 
 /* === BARRE D'�TAT SOUS LES FILTRES === */

@@ -264,7 +264,6 @@ header.navbar .btn-icon.btn-primary:hover {
 
 /* === 4. FOND & CARDS CONTENU === */
 .card,
-.modal-content,
 .search_card {
     background-color: var(--cid-white) !important;
     border: 1px solid var(--cid-border) !important;
@@ -272,6 +271,43 @@ header.navbar .btn-icon.btn-primary:hover {
     box-shadow: 0 4px 16px rgba(27, 58, 107, 0.08) !important;
     /* overflow: hidden supprimé pour permettre l'affichage des dropdowns */
 }
+
+/* =========================================================
+   TOUS LES OVERLAYS : modaux, dropdowns, tooltips, popovers
+   Valeurs z-index Bootstrap 5 officielles — NE PAS modifier.
+   NE JAMAIS appliquer transform sur .modal-content :
+   transform crée un stacking context qui brise position:fixed.
+   ========================================================= */
+
+/* Bootstrap 5 z-index scale officiel */
+.modal-backdrop  { z-index: 1050 !important; }
+.modal           {
+    z-index: 1055 !important;
+    position: fixed !important;  /* Toujours fixé au viewport, ignore les parents */
+}
+.modal-content   {
+    background-color: var(--cid-white) !important;
+    border: 1px solid var(--cid-border) !important;
+    border-radius: var(--cid-radius) !important;
+    box-shadow: 0 8px 40px rgba(27, 58, 107, 0.22) !important;
+    transform: none !important;
+    animation: none !important;
+}
+.dropdown-menu      { z-index: 1060 !important; }
+.tooltip.show       { z-index: 1070 !important; }
+.popover            { z-index: 1080 !important; }
+.select2-dropdown   { z-index: 1090 !important; }
+.flatpickr-calendar { z-index: 1100 !important; }
+.ui-dialog          { z-index: 1200 !important; }
+.ui-widget-overlay  { z-index: 1199 !important; }
+
+/* Sidebar — doit rester SOUS les modaux */
+.navbar-vertical,
+nav.navbar-vertical { z-index: 1030 !important; }
+
+/* Top navbar — sous les modaux */
+header.navbar:not(.navbar-vertical),
+.navbar.topbar      { z-index: 1030 !important; }
 
 .card {
     background-color: var(--cid-white) !important;
@@ -553,9 +589,8 @@ button,
 input,
 select,
 textarea,
-.card,
 .nav-link {
-    transition: background var(--cid-transition), color var(--cid-transition), box-shadow var(--cid-transition), transform var(--cid-transition), border-color var(--cid-transition) !important;
+    transition: background var(--cid-transition), color var(--cid-transition), box-shadow var(--cid-transition), border-color var(--cid-transition) !important;
 }
 
 /* === LIENS GLOBAUX === */
@@ -597,6 +632,7 @@ a:hover {
     box-shadow: 0 8px 24px rgba(27, 58, 107, 0.12) !important;
     font-size: 13px !important;
     padding: 0.4rem !important;
+    z-index: 9999 !important;
 }
 
 .dropdown-item {
@@ -650,17 +686,20 @@ a:hover {
     color: var(--cid-orange) !important;
 }
 
-/* === CARDS — Élévation hover === */
-.card {
+/* === CARDS — Élévation hover (EXCLURE .modal-content) ===
+   RAISON : transform sur un parent crée un stacking context.
+   Si .modal-content hérite de transform, le modal reste
+   prisonnier du layout au lieu de flotter au-dessus. === */
+.card:not(.modal-content) {
     transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.2s ease !important;
 }
 
-.card:hover {
+.card:not(.modal-content):hover {
     transform: translateY(-4px) !important;
     box-shadow: 0 12px 32px rgba(27, 58, 107, 0.14) !important;
 }
 
-.card:active {
+.card:not(.modal-content):active {
     transform: translateY(-1px) scale(0.995) !important;
     box-shadow: 0 4px 12px rgba(27, 58, 107, 0.10) !important;
 }
@@ -668,7 +707,8 @@ a:hover {
 /* === CARD HEADER — Trait gradient animé === */
 .card-header {
     position: relative !important;
-    overflow: hidden !important;
+    /* overflow: visible pour laisser les dropdowns dérouler (rechercher/trier) */
+    overflow: visible !important;
 }
 
 .card-header::after {
@@ -688,17 +728,16 @@ a:hover {
 
 /* === BOUTON PRIMAIRE — Hover simple === */
 .btn-primary {
-    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    transition: background 0.2s ease, box-shadow 0.2s ease !important;
 }
 
 
 .btn-primary:hover {
-    transform: translateY(-1px) !important;
     box-shadow: 0 6px 20px rgba(27, 58, 107, 0.28) !important;
 }
 
 .btn-primary:active {
-    transform: translateY(0) scale(0.97) !important;
+    box-shadow: 0 2px 8px rgba(27, 58, 107, 0.20) !important;
 }
 
 /* === TABLEAUX — Animation d'apparition supprimée pour éviter le masquage des données === */
@@ -755,21 +794,20 @@ header.navbar input[type="search"]:focus,
     transform: scale(1.12) rotate(5deg) !important;
 }
 
-/* === PAGE ENTRÉE — Fade + slide === */
+/* === PAGE ENTRÉE — Fade UNIQUEMENT, sans transform ===
+   CRITIQUE : transform:translateY(0) dans le keyframe final
+   (avec animation-fill-mode:forwards) laisse un transform actif
+   sur .page-body MÊME après la fin de l'animation.
+   Cela crée un stacking context permanent qui emprisonne
+   TOUS les modaux/overlays à l'intérieur du flux de la page.
+   Solution : utiliser uniquement opacity pour l'animation. === */
 .page-body {
     animation: page-enter 0.35s ease forwards !important;
 }
 
 @keyframes page-enter {
-    from {
-        opacity: 0 !important;
-        transform: translateY(12px) !important;
-    }
-
-    to {
-        opacity: 1 !important;
-        transform: translateY(0) !important;
-    }
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
 /* === SKELETON LOADER === */

@@ -1,6 +1,6 @@
 <?php
 // Cache busting — incrémenter à chaque déploiement
-define('PLUGIN_MONPLUGIN_VERSION', '1.0.8');
+define('PLUGIN_MONPLUGIN_VERSION', '1.2.5');
 
 function plugin_init_monplugin()
 {

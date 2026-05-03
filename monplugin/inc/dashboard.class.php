@@ -242,7 +242,6 @@ class PluginMonpluginDashboard extends \CommonGLPI {
                 <div>
                     <div class="geo-kpi-label">Total tickets ouverts</div>
                     <div class="geo-kpi-value" id="kpi-total">0</div>
-                    <div class="geo-kpi-trend trend-up">' . htmlspecialchars($trends['total']) . '</div>
                 </div>
             </div>
             <div class="geo-kpi-card kpi-incident">
@@ -250,7 +249,6 @@ class PluginMonpluginDashboard extends \CommonGLPI {
                 <div>
                     <div class="geo-kpi-label">Incidents</div>
                     <div class="geo-kpi-value" id="kpi-incidents">0</div>
-                    <div class="geo-kpi-trend trend-flat">' . htmlspecialchars($trends['incidents']) . '</div>
                 </div>
             </div>
             <div class="geo-kpi-card kpi-demande">
@@ -258,7 +256,6 @@ class PluginMonpluginDashboard extends \CommonGLPI {
                 <div>
                     <div class="geo-kpi-label">Demandes</div>
                     <div class="geo-kpi-value" id="kpi-requests">0</div>
-                    <div class="geo-kpi-trend trend-down">' . htmlspecialchars($trends['requests']) . '</div>
                 </div>
             </div>
             <div class="geo-kpi-card kpi-sites">
@@ -266,27 +263,46 @@ class PluginMonpluginDashboard extends \CommonGLPI {
                 <div>
                     <div class="geo-kpi-label">Sites actifs</div>
                     <div class="geo-kpi-value" id="kpi-sites">0</div>
-                    <div class="geo-kpi-trend trend-up">' . htmlspecialchars($trends['sites']) . '</div>
                 </div>
             </div>
         </div>';
 
-        // Barre de filtres
+        // Barre de filtres pro — pleine largeur
         echo '
         <div class="geo-filter-bar">
-            <button class="geo-filter-btn active" data-type="all">Tous <span class="badge-count" id="badge-all">0</span></button>
-            <button class="geo-filter-btn" data-type="1">Incidents ▲ <span class="badge-count" id="badge-1">0</span></button>
-            <button class="geo-filter-btn" data-type="2">Demandes ◆ <span class="badge-count" id="badge-2">0</span></button>
-            
-            <select class="geo-filter-btn" id="geo-status-filter">
-                <option value="all">Tous statuts ▾</option>
-                <option value="1">Nouveau</option>
-                <option value="2">En cours (Attribué)</option>
-                <option value="3">En cours (Planifié)</option>
-                <option value="4">En attente</option>
-                <option value="5">Résolu</option>
-                <option value="6">Clos</option>
-            </select>
+            <div class="geo-filter-group">
+                <button class="geo-filter-btn active" data-type="all">
+                    <i class="ti ti-layout-list"></i>
+                    <span>Tous</span>
+                    <span class="badge-count" id="badge-all">0</span>
+                </button>
+                <button class="geo-filter-btn" data-type="1">
+                    <i class="ti ti-alert-triangle"></i>
+                    <span>Incidents</span>
+                    <span class="badge-count" id="badge-1">0</span>
+                </button>
+                <button class="geo-filter-btn" data-type="2">
+                    <i class="ti ti-headset"></i>
+                    <span>Demandes</span>
+                    <span class="badge-count" id="badge-2">0</span>
+                </button>
+            </div>
+
+            <div class="geo-filter-separator"></div>
+
+            <div class="geo-filter-right">
+                <div class="geo-select-wrapper">
+                    <select id="geo-status-filter" class="geo-status-select">
+                        <option value="all">Tous les statuts</option>
+                        <option value="1">Nouveau</option>
+                        <option value="2">En cours (Attribué)</option>
+                        <option value="3">En cours (Planifié)</option>
+                        <option value="4">En attente</option>
+                        <option value="5">Résolu</option>
+                        <option value="6">Clos</option>
+                    </select>
+                </div>
+            </div>
         </div>';
 
         // Barre d\'état (status bar)

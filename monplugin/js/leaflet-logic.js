@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Logique pour le dashboard géographique Leaflet
  * Version: 3.0 (Sans cluster, design CID pur, tooltips permanents)
  */
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             <!-- Footer lien -->
             <div style="padding:8px 16px; background:#f8fafc; border-top:1px solid #eef3fa;">
-                <a href="/glpi/front/ticket.php?is_deleted=0&criteria[0][field]=3&criteria[0][searchtype]=equals&criteria[0][value]=${site.id}"
+                <a href="/front/ticket.php?is_deleted=0&criteria[0][field]=83&criteria[0][searchtype]=equals&criteria[0][value]=${site.id}&search=Search"
                    style="display:block; text-align:center; color:#2e7fba; font-size:12px; font-weight:700; text-decoration:none; padding:6px; border-radius:6px; background:#eff6ff; transition:background 0.2s;" target="_blank">
                     🎫 Voir les tickets de ce site →
                 </a>
