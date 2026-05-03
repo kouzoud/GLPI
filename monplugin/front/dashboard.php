@@ -22,7 +22,22 @@ $plugin_version = defined('PLUGIN_MONPLUGIN_VERSION') ? PLUGIN_MONPLUGIN_VERSION
 
 <?php
 // Page header GLPI standard
-Html::header('Carte des sites', '', 'helpdesk', 'geodashboard');
+Html::header('Carte CID', '', 'helpdesk', 'monplugin');
+
+// TITRE DE PAGE PROPRE
+echo '<div class="page-header mb-3">
+    <div class="row align-items-center">
+        <div class="col-auto">
+            <h2 class="page-title">
+                <i class="ti ti-map-pin me-2" style="color:#d4521c"></i>
+                Carte des sites CID
+            </h2>
+            <div class="text-muted mt-1" style="font-size:12px">
+                Supervision géographique en temps réel
+            </div>
+        </div>
+    </div>
+</div>';
 ?>
 
 <!-- Leaflet JS -->

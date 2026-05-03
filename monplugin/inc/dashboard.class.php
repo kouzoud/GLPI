@@ -62,8 +62,8 @@ class PluginMonpluginDashboard extends \CommonGLPI {
                 'loc.name',
                 'loc.latitude',
                 'loc.longitude',
-                new \QueryExpression('SUM(CASE WHEN t.type = 1 THEN 1 ELSE 0 END) AS incidents_open'),
-                new \QueryExpression('SUM(CASE WHEN t.type = 2 THEN 1 ELSE 0 END) AS requests_open'),
+                new \QueryExpression('SUM(CASE WHEN t.type = 1 AND t.status IN (1,2,3,4) THEN 1 ELSE 0 END) AS incidents_open'),
+                new \QueryExpression('SUM(CASE WHEN t.type = 2 AND t.status IN (1,2,3,4) THEN 1 ELSE 0 END) AS requests_open'),
                 new \QueryExpression('SUM(CASE WHEN t.status IN (1,2,3,4) THEN 1 ELSE 0 END) AS total_open'),
                 new \QueryExpression('SUM(CASE WHEN t.status IN (5,6) THEN 1 ELSE 0 END) AS total_closed')
             ],
@@ -203,12 +203,25 @@ class PluginMonpluginDashboard extends \CommonGLPI {
             'sites' => $sites,
             'meta' => [
                 'generated_at' => date('c'),
+                'last_ticket_date' => 'il y a 2 min', // TODO: Implement real last update logic
                 'total_sites' => count($sites),
                 'filters_applied' => $filters
             ]
         ];
         
         return json_encode($response);
+    }
+
+    /**
+     * Get trend value (mocked implementation, would normally diff current vs last week)
+     */
+    public static function getTrend(): array {
+        return [
+            'total' => '+2 depuis hier',
+            'incidents' => '= stable',
+            'requests' => '-1 depuis hier',
+            'sites' => '+1 actif'
+        ];
     }
 
     /**
@@ -219,33 +232,51 @@ class PluginMonpluginDashboard extends \CommonGLPI {
         
         echo '<div id="geo-dashboard-container">';
         
+        $trends = self::getTrend();
+
         // KPI Cards
         echo '
         <div class="geo-kpi-grid">
-            <div class="geo-kpi-card" style="--accent-color: var(--cid-navy);">
-                <div style="font-size: 13px; color: var(--cid-muted);">Total tickets ouverts</div>
-                <div style="font-size: 24px; font-weight: 700; color: var(--cid-navy);" id="kpi-total">0</div>
+            <div class="geo-kpi-card kpi-total">
+                <div class="geo-kpi-icon"><i class="ti ti-ticket"></i></div>
+                <div>
+                    <div class="geo-kpi-label">Total tickets ouverts</div>
+                    <div class="geo-kpi-value" id="kpi-total">0</div>
+                    <div class="geo-kpi-trend trend-up">' . htmlspecialchars($trends['total']) . '</div>
+                </div>
             </div>
-            <div class="geo-kpi-card" style="--accent-color: var(--cid-danger);">
-                <div style="font-size: 13px; color: var(--cid-muted);">Incidents</div>
-                <div style="font-size: 24px; font-weight: 700; color: var(--cid-danger);" id="kpi-incidents">0</div>
+            <div class="geo-kpi-card kpi-incident">
+                <div class="geo-kpi-icon"><i class="ti ti-alert-triangle"></i></div>
+                <div>
+                    <div class="geo-kpi-label">Incidents</div>
+                    <div class="geo-kpi-value" id="kpi-incidents">0</div>
+                    <div class="geo-kpi-trend trend-flat">' . htmlspecialchars($trends['incidents']) . '</div>
+                </div>
             </div>
-            <div class="geo-kpi-card" style="--accent-color: var(--cid-blue);">
-                <div style="font-size: 13px; color: var(--cid-muted);">Demandes</div>
-                <div style="font-size: 24px; font-weight: 700; color: var(--cid-blue);" id="kpi-requests">0</div>
+            <div class="geo-kpi-card kpi-demande">
+                <div class="geo-kpi-icon"><i class="ti ti-headset"></i></div>
+                <div>
+                    <div class="geo-kpi-label">Demandes</div>
+                    <div class="geo-kpi-value" id="kpi-requests">0</div>
+                    <div class="geo-kpi-trend trend-down">' . htmlspecialchars($trends['requests']) . '</div>
+                </div>
             </div>
-            <div class="geo-kpi-card" style="--accent-color: var(--cid-success);">
-                <div style="font-size: 13px; color: var(--cid-muted);">Sites actifs</div>
-                <div style="font-size: 24px; font-weight: 700; color: var(--cid-success);" id="kpi-sites">0</div>
+            <div class="geo-kpi-card kpi-sites">
+                <div class="geo-kpi-icon"><i class="ti ti-building-community"></i></div>
+                <div>
+                    <div class="geo-kpi-label">Sites actifs</div>
+                    <div class="geo-kpi-value" id="kpi-sites">0</div>
+                    <div class="geo-kpi-trend trend-up">' . htmlspecialchars($trends['sites']) . '</div>
+                </div>
             </div>
         </div>';
 
         // Barre de filtres
         echo '
         <div class="geo-filter-bar">
-            <button class="geo-filter-btn active" data-type="all">Tous</button>
-            <button class="geo-filter-btn" data-type="1">Incidents ▲</button>
-            <button class="geo-filter-btn" data-type="2">Demandes ◆</button>
+            <button class="geo-filter-btn active" data-type="all">Tous <span class="badge-count" id="badge-all">0</span></button>
+            <button class="geo-filter-btn" data-type="1">Incidents ▲ <span class="badge-count" id="badge-1">0</span></button>
+            <button class="geo-filter-btn" data-type="2">Demandes ◆ <span class="badge-count" id="badge-2">0</span></button>
             
             <select class="geo-filter-btn" id="geo-status-filter">
                 <option value="all">Tous statuts ▾</option>
@@ -256,6 +287,13 @@ class PluginMonpluginDashboard extends \CommonGLPI {
                 <option value="5">Résolu</option>
                 <option value="6">Clos</option>
             </select>
+        </div>';
+
+        // Barre d\'état (status bar)
+        echo '
+        <div class="geo-status-bar">
+            <div><span class="geo-status-dot"></span> Mise à jour automatique active</div>
+            <div id="geo-meta-info">Chargement...</div>
         </div>';
 
         // Conteneur de la carte
