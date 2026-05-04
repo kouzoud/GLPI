@@ -1,40 +1,83 @@
 /* ============================================================
-   PAGE LOGIN — v1.1.7
+   PAGE LOGIN — v2.0.0
+   Animation Constellation Réseau Neuronal — fond navy professionnel
    Sélecteurs exacts HTML GLPI : body.welcome-anonymous
-   Fix layout : col-md-5 élargi, col-auto caché
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
+/* ============================================================
+   VARIABLES
+   ============================================================ */
 :root {
-    --login-navy:   #1a2e4a;
-    --login-navy-2: #0f1e33;
-    --login-blue:   #2563eb;
+    --login-navy:   #64d2ff;       /* cyan lumineux — accents sur fond sombre  */
+    --login-blue:   #93e0ff;       /* cyan clair                               */
     --login-white:  #ffffff;
-    --login-text:   #1e293b;
-    --login-muted:  #64748b;
-    --login-border: #e2e8f0;
+    --login-text:   #e2f0ff;       /* texte clair sur fond navy                */
+    --login-muted:  #8bafc8;       /* texte secondaire                         */
+    --login-border: rgba(100,210,255,0.18);  /* bordure subtile cyan            */
+    --login-bg:     rgba(13,27,42,0.55);     /* fond card semi-transparent      */
 }
 
-/* === FOND DE PAGE === */
+/* ============================================================
+   SECTION 1 — FOND DE PAGE : NAVY PROFESSIONNEL
+   Le JS injecte le dégradé directement sur body.style.background
+   Ce bloc assure le fallback si le script est bloqué.
+   ============================================================ */
 body.welcome-anonymous {
     font-family: 'Inter', sans-serif !important;
-    background: linear-gradient(135deg, var(--login-navy) 0%, #1a3a6e 50%, var(--login-navy-2) 100%) !important;
+    background: linear-gradient(160deg, #0d1b2a 0%, #112240 55%, #0a192f 100%) !important;
     min-height: 100vh !important;
     overflow-x: hidden !important;
-}
-body.welcome-anonymous::before {
-    content: '' !important;
-    position: fixed !important;
-    top: -20%; right: -10% !important;
-    width: 500px; height: 500px !important;
-    background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%) !important;
-    border-radius: 50% !important;
-    pointer-events: none !important;
-    z-index: 0 !important;
+    color: var(--login-text) !important;
 }
 
-/* === WRAPPER === */
+/* Supprime l'ancien pseudo-élément glow GLPI */
+body.welcome-anonymous::before {
+    display: none !important;
+}
+
+/* ============================================================
+   SECTION 2 — CANVAS PARTICULES ANTIGRAVITY
+   Positionné en fixed derrière tout le contenu
+   ============================================================ */
+#cid-particles-canvas {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 0 !important;
+    pointer-events: none !important;  /* Ne bloque JAMAIS les clics */
+    background: transparent !important;
+    display: block !important;
+}
+
+/* ============================================================
+   SECTION 3 — OVERLAY GRADIENT DOUX
+   Lueur cyan subtile dans les coins (renforce l'ambiance)
+   ============================================================ */
+#cid-login-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    background:
+        radial-gradient(
+            ellipse at 15% 15%,
+            rgba(100, 210, 255, 0.07) 0%,
+            transparent 55%
+        ),
+        radial-gradient(
+            ellipse at 85% 85%,
+            rgba(64, 150, 220, 0.06) 0%,
+            transparent 55%
+        ) !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+}
+
+/* ============================================================
+   SECTION 4 — WRAPPER PAGE
+   ============================================================ */
 .page-anonymous {
     background: transparent !important;
     min-height: 100vh !important;
@@ -44,22 +87,24 @@ body.welcome-anonymous::before {
     align-items: center !important;
 }
 
-/* === CONTENEUR PRINCIPAL ===
-   GLPI met max-width:60rem en inline style — on le réduit via CSS
-   pour que le col-md-5 soit plus grand relativement */
+/* ============================================================
+   SECTION 5 — CONTENEUR PRINCIPAL
+   Override max-width inline GLPI (60rem → 500px)
+   ============================================================ */
 .container-tight {
     position: relative !important;
-    z-index: 1 !important;
-    max-width: 500px !important;  /* Override le 60rem inline */
+    z-index: 10 !important;          /* Au-dessus du canvas (z=0) et overlay (z=1) */
+    max-width: 500px !important;
     width: 100% !important;
     margin: 0 auto !important;
     padding: 0 1rem !important;
 }
 
-/* === FIX LAYOUT ROW BOOTSTRAP ===
-   Le formulaire est dans col-md-5 et le <link> CSS dans col-auto.
-   On force le col-md-5 à prendre toute la largeur disponible
-   et on cache le col-auto (conteneur du <link>, purement technique) */
+/* ============================================================
+   SECTION 6 — FIX LAYOUT BOOTSTRAP
+   Force col-md-5 à prendre toute la largeur dispo
+   Cache le col-auto (contient uniquement le <link> CSS)
+   ============================================================ */
 .card.main-content-card .row.justify-content-center > .col-md-5,
 .container-tight .row.justify-content-center > .col-md-5 {
     flex: 0 0 100% !important;
@@ -67,7 +112,6 @@ body.welcome-anonymous::before {
     width: 100% !important;
 }
 
-/* Cache le div col-auto qui contient uniquement le <link> CSS */
 .container-tight .row.justify-content-center > .col-auto,
 .card.main-content-card .row > .col-auto {
     display: none !important;
@@ -76,29 +120,47 @@ body.welcome-anonymous::before {
     overflow: hidden !important;
 }
 
-/* === LOGO GLPI === */
-.glpi-logo {
-    filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0,0,0,0.4)) !important;
-    max-height: 55px !important;
+/* ============================================================
+   SECTION 7 — LOGO GLPI
+   Inversion + luminosité pour fond sombre
+   ============================================================ */
+.glpi-logo,
+.login-logo img,
+.login-header img,
+img.login-logo {
+    filter: brightness(0) invert(1) !important;  /* Logo blanc sur fond sombre */
+    max-height: 60px !important;
     margin: 0 auto 1.5rem auto !important;
     display: block !important;
+    opacity: 0.92 !important;
 }
 
-/* === CARD PRINCIPALE === */
+/* ============================================================
+   SECTION 8 — CARD PRINCIPALE
+   Glassmorphism dark : verre fumé sur fond constellation
+   ============================================================ */
 .card.main-content-card {
-    background: #ffffff !important;
-    border: none !important;
+    position: relative !important;
+    z-index: 10 !important;
+    background: rgba(13, 27, 42, 0.62) !important;
+    backdrop-filter: blur(20px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+    border: 1px solid rgba(100, 210, 255, 0.18) !important;
     border-radius: 20px !important;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3) !important;
+    box-shadow:
+        0 8px 40px rgba(0, 0, 0, 0.50),
+        0 0 0 1px rgba(100, 210, 255, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
     overflow: visible !important;
-    animation: loginFadeUp 0.4s ease both !important;
+    animation: loginFadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both !important;
 }
+
 @keyframes loginFadeUp {
     from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Cacher le card-header vide du dessus */
+/* Cache le card-header vide */
 .card.main-content-card > .card-header:first-child:empty {
     display: none !important;
 }
@@ -108,17 +170,21 @@ body.welcome-anonymous::before {
     padding: 2rem 2rem !important;
 }
 
-/* === TITRE === */
+/* ============================================================
+   SECTION 9 — TITRE "Connexion à votre compte"
+   ============================================================ */
 .card.main-content-card h2,
 .card.main-content-card .card-header h2 {
     font-size: 1.4rem !important;
     font-weight: 800 !important;
-    color: var(--login-text) !important;
+    color: #e2f0ff !important;
     text-align: center !important;
     line-height: 1.3 !important;
-    white-space: nowrap !important; /* Empêche le retour à la ligne */
+    white-space: nowrap !important;
     margin-bottom: 0 !important;
+    letter-spacing: -0.02em !important;
 }
+
 .card.main-content-card .card-header.mb-4 {
     background: transparent !important;
     border: none !important;
@@ -126,58 +192,72 @@ body.welcome-anonymous::before {
     text-align: center !important;
 }
 
-/* === LABELS === */
+/* ============================================================
+   SECTION 10 — LABELS
+   ============================================================ */
 .card.main-content-card label,
 .card.main-content-card .form-label {
     font-weight: 600 !important;
     font-size: 0.83rem !important;
-    color: var(--login-text) !important;
+    color: var(--login-blue) !important;   /* cyan clair sur fond sombre */
     margin-bottom: 0.3rem !important;
     display: block !important;
     white-space: nowrap !important;
+    letter-spacing: 0.01em !important;
 }
 
-/* === INPUTS === */
+/* ============================================================
+   SECTION 11 — INPUTS
+   ============================================================ */
 #login_name,
 #login_password,
 .card.main-content-card .form-control {
     border-radius: 10px !important;
-    border: 1.5px solid var(--login-border) !important;
+    border: 1.5px solid rgba(100, 210, 255, 0.20) !important;
     font-size: 0.9rem !important;
     padding: 0.6rem 0.9rem !important;
-    background: #f8fafc !important;
-    color: var(--login-text) !important;
+    background: rgba(100, 210, 255, 0.06) !important;
+    color: #e2f0ff !important;
     width: 100% !important;
     box-sizing: border-box !important;
-    transition: border-color 0.2s, box-shadow 0.2s !important;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease !important;
 }
+
+#login_name::placeholder,
+#login_password::placeholder,
+.card.main-content-card .form-control::placeholder {
+    color: rgba(139, 175, 200, 0.6) !important;
+}
+
 #login_name:focus,
 #login_password:focus,
 .card.main-content-card .form-control:focus {
-    border-color: var(--login-blue) !important;
-    box-shadow: 0 0 0 3px rgba(37,99,235,0.15) !important;
-    background: #fff !important;
+    border-color: rgba(100, 210, 255, 0.55) !important;
+    box-shadow: 0 0 0 3px rgba(100, 210, 255, 0.12) !important;
+    background: rgba(100, 210, 255, 0.10) !important;
     outline: none !important;
 }
 
-/* === SELECT2 "Source de connexion" === */
+/* ============================================================
+   SECTION 12 — SELECT2 "Source de connexion"
+   ============================================================ */
 .card.main-content-card .select2-container {
     width: 100% !important;
 }
 .card.main-content-card .select2-selection--single {
     border-radius: 10px !important;
-    border: 1.5px solid var(--login-border) !important;
+    border: 1.5px solid rgba(100, 210, 255, 0.20) !important;
     height: 40px !important;
     padding: 0.5rem 0.9rem !important;
-    background: #f8fafc !important;
+    background: rgba(100, 210, 255, 0.06) !important;
     display: flex !important;
     align-items: center !important;
 }
 .card.main-content-card .select2-selection__rendered {
     font-size: 0.88rem !important;
-    color: var(--login-text) !important;
+    color: #e2f0ff !important;
     padding: 0 !important;
-    overflow: visible !important; /* Empêche la troncature */
+    overflow: visible !important;
     text-overflow: unset !important;
     white-space: nowrap !important;
 }
@@ -186,7 +266,9 @@ body.welcome-anonymous::before {
     transform: translateY(-50%) !important;
 }
 
-/* === CHECKBOX === */
+/* ============================================================
+   SECTION 13 — CHECKBOX
+   ============================================================ */
 .card.main-content-card .form-check {
     display: flex !important;
     align-items: center !important;
@@ -195,50 +277,95 @@ body.welcome-anonymous::before {
 .card.main-content-card .form-check-label {
     font-size: 0.83rem !important;
     color: var(--login-muted) !important;
-    white-space: nowrap !important; /* Évite le retour à la ligne */
+    white-space: nowrap !important;
     line-height: 1 !important;
 }
+.card.main-content-card .form-check-input {
+    background-color: rgba(100, 210, 255, 0.08) !important;
+    border-color: rgba(100, 210, 255, 0.30) !important;
+}
 .card.main-content-card .form-check-input:checked {
-    background-color: var(--login-blue) !important;
-    border-color: var(--login-blue) !important;
+    background-color: #64d2ff !important;
+    border-color: #64d2ff !important;
 }
 
-/* === BOUTON CONNEXION === */
+/* ============================================================
+   SECTION 14 — BOUTON SE CONNECTER
+   Gradient CID + shimmer au hover
+   ============================================================ */
 button[name="submit"],
 .card.main-content-card .btn-primary {
-    background: linear-gradient(135deg, var(--login-blue) 0%, var(--login-navy) 100%) !important;
+    background: linear-gradient(
+        135deg,
+        #1a6fa8 0%,
+        #64d2ff 100%
+    ) !important;
     border: none !important;
     border-radius: 12px !important;
     padding: 0.72rem 1rem !important;
     font-size: 0.92rem !important;
     font-weight: 700 !important;
-    color: #fff !important;
+    color: #0a192f !important;        /* texte sombre sur bouton cyan clair  */
     width: 100% !important;
     cursor: pointer !important;
-    box-shadow: 0 6px 18px rgba(37,99,235,0.3) !important;
-    transition: all 0.2s ease !important;
+    box-shadow:
+        0 6px 24px rgba(100, 210, 255, 0.28),
+        0 0 0 1px rgba(100, 210, 255, 0.15) !important;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1) !important;
     margin-top: 0.5rem !important;
+    position: relative !important;
+    overflow: hidden !important;
+    letter-spacing: 0.01em !important;
 }
+
+/* Shimmer effect */
+button[name="submit"]::after,
+.card.main-content-card .btn-primary::after {
+    content: '' !important;
+    position: absolute !important;
+    top: -50% !important;
+    left: -75% !important;
+    width: 50% !important;
+    height: 200% !important;
+    background: rgba(255, 255, 255, 0.22) !important;
+    transform: skewX(-20deg) !important;
+    transition: left 0.7s ease !important;
+}
+
+button[name="submit"]:hover::after,
+.card.main-content-card .btn-primary:hover::after {
+    left: 130% !important;
+}
+
 button[name="submit"]:hover,
 .card.main-content-card .btn-primary:hover {
-    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important;
-    box-shadow: 0 10px 28px rgba(37,99,235,0.42) !important;
     transform: translateY(-2px) !important;
+    box-shadow:
+        0 12px 36px rgba(100, 210, 255, 0.40),
+        0 0 0 1px rgba(100, 210, 255, 0.25) !important;
 }
 
-/* === FOOTER COPYRIGHT === */
+/* ============================================================
+   SECTION 15 — FOOTER COPYRIGHT
+   Adapté au fond clair (texte foncé)
+   ============================================================ */
 .text-center.text-muted.mt-3,
 .text-center.text-muted.mt-3 a {
-    color: rgba(255,255,255,0.4) !important;
+    color: rgba(139, 175, 200, 0.55) !important;   /* clair/discret sur fond sombre */
     font-size: 0.72rem !important;
 }
-.text-center.text-muted.mt-3 a:hover { color: rgba(255,255,255,0.7) !important; }
+.text-center.text-muted.mt-3 a:hover {
+    color: rgba(100, 210, 255, 0.80) !important;   /* cyan au hover                 */
+}
 
-/* === ERREURS === */
+/* ============================================================
+   SECTION 16 — ALERTES D'ERREUR
+   ============================================================ */
 .card.main-content-card .alert-danger {
     border-radius: 10px !important;
-    border-left: 4px solid #dc2626 !important;
-    background: #fff1f1 !important;
+    border-left: 4px solid #ff6b6b !important;
+    background: rgba(220, 38, 38, 0.15) !important;
+    border: 1px solid rgba(220, 38, 38, 0.25) !important;
     font-size: 0.82rem !important;
-    color: #7f1d1d !important;
+    color: #fca5a5 !important;   /* rouge clair lisible sur fond sombre */
 }
