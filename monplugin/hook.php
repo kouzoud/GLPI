@@ -41,15 +41,19 @@ function plugin_monplugin_inject_css()
         // Fix modaux mot de passe : les déplace vers <body> pour que
         // position:fixed fonctionne correctement (hors du DOM du formulaire)
         $PLUGIN_HOOKS['add_javascript']['monplugin'][] = 'js/modal-fix.js';
+
+        // Super Admin uniquement — page centrale : affiche seulement Metabase
+        if ($profile_id === 4) {
+            $PLUGIN_HOOKS['add_javascript']['monplugin'][] = 'js/superadmin-central.js';
+        }
     }
 
-    // === DASHBOARD GÉOGRAPHIQUE — Assets locaux ===
-    // Styles personnalisés de la carte (s'appliquent à tous les profils)
+    // === DASHBOARD GÉOGRAPHIQUE — Styles globaux ===
+    // map-style.css reste global (styles de la carte disponibles sur la page dashboard)
+    // geodash-vue.js est chargé uniquement depuis front/dashboard.php (pas globalement)
     $PLUGIN_HOOKS['add_css']['monplugin'][] = 'css/map-style.css';
 
-    // Logique Leaflet (s'applique à tous les profils)
-    $PLUGIN_HOOKS['add_javascript']['monplugin'][] = 'js/leaflet-logic.js';
-    // Aucun profil reconnu → pas de CSS/JS injecté (fallback propre)
+    // leaflet-logic.js retiré — remplacé par js/geodash-vue.js (chargé par front/dashboard.php)
 }
 
 /**

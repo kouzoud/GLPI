@@ -201,14 +201,14 @@ class PluginMonpluginDashboard extends \CommonGLPI {
         
         $response = [
             'sites' => $sites,
-            'meta' => [
-                'generated_at' => date('c'),
-                'last_ticket_date' => 'il y a 2 min', // TODO: Implement real last update logic
-                'total_sites' => count($sites),
+            'meta'  => [
+                'generated_at'    => date('c'),
+                'last_ticket_date'=> 'il y a 2 min',
+                'total_sites'     => count($sites),
                 'filters_applied' => $filters
             ]
         ];
-        
+
         return json_encode($response);
     }
 
@@ -225,101 +225,115 @@ class PluginMonpluginDashboard extends \CommonGLPI {
     }
 
     /**
+     * renderPage() — v2.1.0 Vue.js x-template
+     *
+     * Émet :
+     *   1. Un <script type="text/x-template"> contenant le template Vue
+     *      (évite les problèmes de compilation de chaîne en mode strict CDN)
+     *   2. Le point de montage #geo-dashboard-app avec l'URL AJAX
+     *
      * @return void
      */
     public static function renderPage(): void {
         Session::checkLoginUser();
-        
-        echo '<div id="geo-dashboard-container">';
-        
-        $trends = self::getTrend();
 
-        // KPI Cards
-        echo '
-        <div class="geo-kpi-grid">
-            <div class="geo-kpi-card kpi-total">
-                <div class="geo-kpi-icon"><i class="ti ti-ticket"></i></div>
-                <div>
-                    <div class="geo-kpi-label">Total tickets ouverts</div>
-                    <div class="geo-kpi-value" id="kpi-total">0</div>
-                </div>
-            </div>
-            <div class="geo-kpi-card kpi-incident">
-                <div class="geo-kpi-icon"><i class="ti ti-alert-triangle"></i></div>
-                <div>
-                    <div class="geo-kpi-label">Incidents</div>
-                    <div class="geo-kpi-value" id="kpi-incidents">0</div>
-                </div>
-            </div>
-            <div class="geo-kpi-card kpi-demande">
-                <div class="geo-kpi-icon"><i class="ti ti-headset"></i></div>
-                <div>
-                    <div class="geo-kpi-label">Demandes</div>
-                    <div class="geo-kpi-value" id="kpi-requests">0</div>
-                </div>
-            </div>
-            <div class="geo-kpi-card kpi-sites">
-                <div class="geo-kpi-icon"><i class="ti ti-building-community"></i></div>
-                <div>
-                    <div class="geo-kpi-label">Sites actifs</div>
-                    <div class="geo-kpi-value" id="kpi-sites">0</div>
-                </div>
-            </div>
-        </div>';
+        $ajax_url    = Plugin::getWebDir('monplugin', true, true) . '/front/ajax_geodata.php';
+        $tickets_url = Plugin::getWebDir('monplugin', true, true) . '/front/ajax_recent_tickets.php';
+        $bi_url      = Plugin::getWebDir('monplugin', true, true) . '/front/ajax_bi_data.php';
 
-        // Barre de filtres pro — pleine largeur
-        echo '
-        <div class="geo-filter-bar">
-            <div class="geo-filter-group">
-                <button class="geo-filter-btn active" data-type="all">
-                    <i class="ti ti-layout-list"></i>
-                    <span>Tous</span>
-                    <span class="badge-count" id="badge-all">0</span>
-                </button>
-                <button class="geo-filter-btn" data-type="1">
-                    <i class="ti ti-alert-triangle"></i>
-                    <span>Incidents</span>
-                    <span class="badge-count" id="badge-1">0</span>
-                </button>
-                <button class="geo-filter-btn" data-type="2">
-                    <i class="ti ti-headset"></i>
-                    <span>Demandes</span>
-                    <span class="badge-count" id="badge-2">0</span>
-                </button>
+        /* Nowdoc PHP : pas d'interpolation → les {{ }} Vue sont préservés */
+        echo <<<'VUETEMPLATE'
+<script type="text/x-template" id="geo-dashboard-tpl">
+<div id="geo-dashboard-container">
+
+    <!-- KPI GRID -->
+    <div class="geo-kpi-grid">
+        <div class="geo-kpi-card kpi-total">
+            <div class="geo-kpi-icon"><i class="ti ti-ticket"></i></div>
+            <div>
+                <div class="geo-kpi-label">Total tickets ouverts</div>
+                <div class="geo-kpi-value">{{ kpiTotal }}</div>
             </div>
-
-            <div class="geo-filter-separator"></div>
-
-            <div class="geo-filter-right">
-                <div class="geo-select-wrapper">
-                    <select id="geo-status-filter" class="geo-status-select">
-                        <option value="all">Tous les statuts</option>
-                        <option value="1">Nouveau</option>
-                        <option value="2">En cours (Attribué)</option>
-                        <option value="3">En cours (Planifié)</option>
-                        <option value="4">En attente</option>
-                        <option value="5">Résolu</option>
-                        <option value="6">Clos</option>
-                    </select>
-                </div>
+        </div>
+        <div class="geo-kpi-card kpi-incident">
+            <div class="geo-kpi-icon"><i class="ti ti-alert-triangle"></i></div>
+            <div>
+                <div class="geo-kpi-label">Incidents</div>
+                <div class="geo-kpi-value">{{ kpiIncidents }}</div>
             </div>
-        </div>';
-
-        // Barre d\'état (status bar)
-        echo '
-        <div class="geo-status-bar">
-            <div><span class="geo-status-dot"></span> Mise à jour automatique active</div>
-            <div id="geo-meta-info">Chargement...</div>
-        </div>';
-
-        // Conteneur de la carte
-        echo '<div id="map-container">
-            <div class="geo-loader" id="geo-loader">
-                <div class="geo-loader-spinner"></div>
+        </div>
+        <div class="geo-kpi-card kpi-demande">
+            <div class="geo-kpi-icon"><i class="ti ti-headset"></i></div>
+            <div>
+                <div class="geo-kpi-label">Demandes</div>
+                <div class="geo-kpi-value">{{ kpiRequests }}</div>
             </div>
-        </div>';
-        
-        echo '</div>';
+        </div>
+        <div class="geo-kpi-card kpi-sites">
+            <div class="geo-kpi-icon"><i class="ti ti-building-community"></i></div>
+            <div>
+                <div class="geo-kpi-label">Sites actifs</div>
+                <div class="geo-kpi-value">{{ kpiSites }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BARRE DE FILTRES -->
+    <div class="geo-filter-bar">
+        <div class="geo-filter-group">
+            <button
+                v-for="btn in filterButtons"
+                :key="btn.type"
+                class="geo-filter-btn"
+                :class="{ active: activeType === btn.type }"
+                :data-type="btn.type"
+                @click="setTypeFilter(btn.type)">
+                <i :class="btn.icon"></i>
+                <span>{{ btn.label }}</span>
+                <span class="badge-count">{{ btn.count }}</span>
+            </button>
+        </div>
+        <div class="geo-filter-separator"></div>
+        <div class="geo-filter-right">
+            <div class="geo-select-wrapper">
+                <select v-model="activeStatus" class="geo-status-select" id="geo-status-filter">
+                    <option value="all">Tous les statuts</option>
+                    <option value="1">Nouveau</option>
+                    <option value="2">En cours (Attribu&#233;)</option>
+                    <option value="3">En cours (Planifi&#233;)</option>
+                    <option value="4">En attente</option>
+                    <option value="5">R&#233;solu</option>
+                    <option value="6">Clos</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- BARRE D'ETAT -->
+    <div class="geo-status-bar">
+        <div>
+            <span class="geo-status-dot" :style="statusDotStyle"></span>
+            {{ statusLabel }}
+        </div>
+        <div id="geo-meta-info">{{ metaInfo }}</div>
+    </div>
+
+    <!-- CONTENEUR CARTE (Leaflet monte ici) -->
+    <div id="map-container" style="position:relative;">
+        <div class="geo-loader" :class="{ active: loading }" id="geo-loader">
+            <div class="geo-loader-spinner"></div>
+        </div>
+    </div>
+
+</div>
+</script>
+VUETEMPLATE;
+
+        echo '<div id="geo-dashboard-app"'
+            . ' data-ajax-url="'    . htmlspecialchars($ajax_url,    ENT_QUOTES, 'UTF-8') . '"'
+            . ' data-tickets-url="' . htmlspecialchars($tickets_url, ENT_QUOTES, 'UTF-8') . '"'
+            . ' data-bi-url="'      . htmlspecialchars($bi_url,      ENT_QUOTES, 'UTF-8') . '"'
+            . '></div>';
     }
 
     /**
@@ -347,5 +361,108 @@ class PluginMonpluginDashboard extends \CommonGLPI {
         header('Content-Type: application/json');
         echo self::getGeoDataAsJson($filters);
         exit;
+    }
+
+    /** @return array[] Répartition tickets par statut — SQL direct */
+    public static function getStatusDistribution(): array {
+        global $DB;
+        $labels = [1=>'Nouveau',2=>'Attribué',3=>'Planifié',4=>'En attente',5=>'Résolu',6=>'Clos'];
+        $colors = [1=>'#ef4444',2=>'#d4521c',3=>'#f59e0b',4=>'#6366f1',5=>'#10b981',6=>'#5a7499'];
+        $result = [];
+        try {
+            $res = $DB->query("SELECT `status`, COUNT(*) AS cnt FROM `glpi_tickets` WHERE `is_deleted` = 0 GROUP BY `status` ORDER BY `status` ASC");
+            if ($res) {
+                while ($row = $res->fetch_assoc()) {
+                    $s = (int)$row['status'];
+                    $result[] = ['status'=>$s,'label'=>$labels[$s]??'Inconnu','count'=>(int)$row['cnt'],'color'=>$colors[$s]??'#5a7499'];
+                }
+            }
+        } catch (\Exception $e) { Toolbox::logError($e->getMessage()); }
+        return $result;
+    }
+
+    /** @return array[] Matrice site x priorité — SQL direct */
+    public static function getPriorityHeatmap(): array {
+        global $DB;
+        $tmp = [];
+        try {
+            $res = $DB->query(
+                "SELECT t.`locations_id`, t.`priority`, COUNT(*) AS cnt, l.`name` AS loc_name
+                 FROM `glpi_tickets` t
+                 LEFT JOIN `glpi_locations` l ON l.`id` = t.`locations_id`
+                 WHERE t.`is_deleted` = 0 AND t.`locations_id` > 0
+                 GROUP BY t.`locations_id`, t.`priority`"
+            );
+            if ($res) {
+                while ($row = $res->fetch_assoc()) {
+                    $lid = (int)$row['locations_id'];
+                    if (!isset($tmp[$lid])) $tmp[$lid] = ['name'=>$row['loc_name']?:'Site #'.$lid,'priorities'=>[]];
+                    $tmp[$lid]['priorities'][(int)$row['priority']] = (int)$row['cnt'];
+                }
+            }
+        } catch (\Exception $e) { Toolbox::logError($e->getMessage()); }
+        return array_values($tmp);
+    }
+
+    /** @return array Tendance 7 derniers jours {labels[], incidents[], demandes[]} — SQL direct */
+    public static function get7DayTrend(): array {
+        global $DB;
+        $trend = ['labels'=>[],'incidents'=>[],'demandes'=>[]];
+        $days  = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+        try {
+            $res = $DB->query(
+                "SELECT DATE(`date_creation`) AS day, `type`, COUNT(*) AS cnt
+                 FROM `glpi_tickets`
+                 WHERE `is_deleted` = 0 AND DATE(`date_creation`) >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
+                 GROUP BY DATE(`date_creation`), `type`
+                 ORDER BY `day` ASC"
+            );
+            $byDay = [];
+            if ($res) {
+                while ($row = $res->fetch_assoc()) {
+                    $byDay[$row['day']][(int)$row['type']] = (int)$row['cnt'];
+                }
+            }
+            for ($i = 6; $i >= 0; $i--) {
+                $date = date('Y-m-d', strtotime("-{$i} days"));
+                $trend['labels'][]    = $days[(int)date('w', strtotime($date))];
+                $trend['incidents'][] = $byDay[$date][1] ?? 0;
+                $trend['demandes'][]  = $byDay[$date][2] ?? 0;
+            }
+        } catch (\Exception $e) { Toolbox::logError($e->getMessage()); }
+        return $trend;
+    }
+
+    /** @return array KPIs opérationnels — SQL direct */
+    public static function getOperationalKpis(): array {
+        global $DB;
+        $k = ['avg_resolution_hours'=>null,'resolution_rate_pct'=>0,'busiest_site_name'=>'N/A','busiest_site_count'=>0,'oldest_ticket_name'=>'N/A','oldest_ticket_age'=>'N/A'];
+        try {
+            // KPI 1 — Délai moyen résolution (heures)
+            $r1 = $DB->query("SELECT ROUND(AVG(TIMESTAMPDIFF(HOUR,`date_creation`,`solvedate`)),1) AS avg_h FROM `glpi_tickets` WHERE `is_deleted`=0 AND `solvedate` IS NOT NULL AND `status` >= 5");
+            if ($r1 && $row = $r1->fetch_assoc()) $k['avg_resolution_hours'] = $row['avg_h'] !== null ? (float)$row['avg_h'] : null;
+
+            // KPI 2 — Taux de résolution
+            $r2 = $DB->query("SELECT COUNT(*) AS total, SUM(CASE WHEN `status`>=5 THEN 1 ELSE 0 END) AS resolved FROM `glpi_tickets` WHERE `is_deleted`=0");
+            if ($r2 && $row = $r2->fetch_assoc()) {
+                if ((int)$row['total'] > 0) $k['resolution_rate_pct'] = (int)round((int)$row['resolved'] / (int)$row['total'] * 100);
+            }
+
+            // KPI 3 — Site le plus chargé (tickets ouverts)
+            $r3 = $DB->query("SELECT t.`locations_id`, COUNT(*) AS cnt, l.`name` AS loc_name FROM `glpi_tickets` t LEFT JOIN `glpi_locations` l ON l.`id`=t.`locations_id` WHERE t.`is_deleted`=0 AND t.`status` IN (1,2,3,4) AND t.`locations_id`>0 GROUP BY t.`locations_id` ORDER BY cnt DESC LIMIT 1");
+            if ($r3 && $row = $r3->fetch_assoc()) {
+                $k['busiest_site_name']  = $row['loc_name'] ?: 'Site #'.$row['locations_id'];
+                $k['busiest_site_count'] = (int)$row['cnt'];
+            }
+
+            // KPI 4 — Ticket le plus ancien non résolu
+            $r4 = $DB->query("SELECT `id`,`name`,`date_creation` FROM `glpi_tickets` WHERE `is_deleted`=0 AND `status` IN (1,2,3,4) ORDER BY `date_creation` ASC LIMIT 1");
+            if ($r4 && $row = $r4->fetch_assoc()) {
+                $diff = time() - strtotime($row['date_creation']);
+                $k['oldest_ticket_name'] = mb_substr($row['name'],0,35).(mb_strlen($row['name'])>35?'…':'');
+                $k['oldest_ticket_age']  = ($diff >= 86400 ? floor($diff/86400).'j ' : '').floor(($diff%86400)/3600).'h';
+            }
+        } catch (\Exception $e) { Toolbox::logError($e->getMessage()); }
+        return $k;
     }
 }
