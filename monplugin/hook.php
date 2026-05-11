@@ -9,7 +9,7 @@
  *   ID 6 → Technicien    → technicien.css + effects.js + superadmin-central.js
  *   ID 1 → Employé       → employe.css + effects.js
  *
- * Page centrale : profils 4, 5, 6 voient uniquement l'onglet Tableau de bord Metabase
+ * Page centrale : TOUS les profils — seul l'onglet "Flux RSS" est masqué
  */
 
 function plugin_monplugin_inject_css()
@@ -26,10 +26,10 @@ function plugin_monplugin_inject_css()
 
     // Mapping profil → fichier CSS
     $profile_css_map = [
-        4 => 'css/superadmin.css',   // Super-Admin
-        5 => 'css/technicien.css',   // Dispatcher  ← ajuster l'ID si nécessaire
-        6 => 'css/technicien.css',   // Technicien
-        1 => 'css/employe.css',      // Employé / Self-Service
+         4 => 'css/superadmin.css',   // Super-Admin
+        16 => 'css/dispatcher.css',   // Dispatcher
+        11 => 'css/technicien.css',   // Technicien
+         1 => 'css/employe.css',      // Employé / Self-Service
     ];
 
     if (isset($profile_css_map[$profile_id])) {
@@ -44,16 +44,15 @@ function plugin_monplugin_inject_css()
         // position:fixed fonctionne correctement (hors du DOM du formulaire)
         $PLUGIN_HOOKS['add_javascript']['monplugin'][] = 'js/modal-fix.js';
 
-        // Super Admin, Dispatcher et Technicien — page centrale : Metabase uniquement
-        if (in_array($profile_id, [4, 5, 6])) {
-            $PLUGIN_HOOKS['add_javascript']['monplugin'][] = 'js/superadmin-central.js';
-        }
     }
 
     // === DASHBOARD GÉOGRAPHIQUE — Styles globaux ===
     // map-style.css reste global (styles de la carte disponibles sur la page dashboard)
     // geodash-vue.js est chargé uniquement depuis front/dashboard.php (pas globalement)
     $PLUGIN_HOOKS['add_css']['monplugin'][] = 'css/map-style.css';
+
+    // Masquer l'onglet "Flux RSS" pour tous les profils
+    $PLUGIN_HOOKS['add_javascript']['monplugin'][] = 'js/superadmin-central.js';
 
     // leaflet-logic.js retiré — remplacé par js/geodash-vue.js (chargé par front/dashboard.php)
 }

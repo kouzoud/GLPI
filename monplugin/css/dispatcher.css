@@ -1,0 +1,518 @@
+/* ============================================================
+   DISPATCHER — Profil CID (ID 16)
+   Style : Chef d'orchestre Helpdesk — NOC/Dispatch pro
+   GLPI 10+ / Tabler UI / Sidebar verticale
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* === VARIABLES :root === */
+:root {
+    --disp-navy      : #1b3a6b;
+    --disp-blue      : #2e7fba;
+    --disp-teal      : #0891b2;
+    --disp-bg        : #f0f4f8;
+    --disp-white     : #ffffff;
+    --disp-border    : #dde5f0;
+    --disp-text      : #1e293b;
+    --disp-muted     : #64748b;
+    --disp-en-cours  : #2e7fba;
+    --disp-a-traiter : #d4521c;
+    --disp-en-attente: #8b5cf6;
+    --disp-resolu    : #10b981;
+    --disp-nouveau   : #ef4444;
+    --disp-radius    : 14px;
+    --disp-shadow    : 0 2px 10px rgba(27,58,107,0.07);
+    --disp-transition: 0.18s ease;
+}
+
+/* === SIDEBAR === */
+.navbar-vertical,
+nav.navbar-vertical {
+    background-image: linear-gradient(180deg, #1a2332 0%, #151e2d 100%) !important;
+    background-color: #1a2332 !important;
+    border-right    : none !important;
+    box-shadow      : 2px 0 16px rgba(0,0,0,0.30) !important;
+}
+
+.navbar-vertical .nav-link,
+.navbar-vertical a {
+    color        : rgba(255,255,255,0.80) !important;
+    font-size    : 13px !important;
+    padding      : 0.55rem 1rem !important;
+    border-radius: 8px !important;
+    margin       : 2px 8px !important;
+    transition   : background var(--disp-transition),
+                   color var(--disp-transition) !important;
+}
+
+.navbar-vertical .nav-link:hover {
+    background-color: rgba(8,145,178,0.12) !important;
+    color           : #ffffff !important;
+}
+
+.navbar-vertical .nav-item.active > .nav-link,
+.navbar-vertical .nav-link.active {
+    background-color: rgba(8,145,178,0.20) !important;
+    border-left     : 3px solid var(--disp-teal) !important;
+    color           : #ffffff !important;
+    font-weight     : 600 !important;
+    border-radius   : 0 8px 8px 0 !important;
+    margin-left     : 0 !important;
+    padding-left    : calc(1rem + 8px - 3px) !important;
+}
+
+.navbar-vertical .nav-link i,
+.navbar-vertical .nav-link .ti,
+.navbar-vertical .nav-link svg {
+    color       : rgba(255,255,255,0.55) !important;
+    font-size   : 16px !important;
+    margin-right: 10px !important;
+    transition  : color var(--disp-transition) !important;
+}
+
+.navbar-vertical .nav-link.active i,
+.navbar-vertical .nav-link.active .ti,
+.navbar-vertical .nav-link:hover i,
+.navbar-vertical .nav-link:hover .ti {
+    color: var(--disp-teal) !important;
+}
+
+.navbar-vertical .navbar-nav .nav-link {
+    background-color: rgba(0,0,0,0.15) !important;
+    font-size       : 12px !important;
+    padding-left    : 2.75rem !important;
+}
+
+.navbar-vertical hr,
+.navbar-vertical .nav-category {
+    border-top: 1px solid rgba(255,255,255,0.07) !important;
+    margin    : 8px 0 !important;
+}
+
+.navbar-vertical .collapse-btn,
+.navbar-vertical .nav-link[title*="ollapse"],
+.navbar-vertical .nav-link[title*="duire"] {
+    color  : rgba(255,255,255,0.40) !important;
+}
+
+.navbar-vertical .navbar-brand img,
+.navbar-vertical .glpi-logo {
+    filter: brightness(0) invert(1) !important;
+}
+
+.navbar-vertical {
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--disp-teal) transparent !important;
+}
+.navbar-vertical::-webkit-scrollbar       { width: 3px !important; }
+.navbar-vertical::-webkit-scrollbar-thumb { background: var(--disp-teal) !important; border-radius: 3px !important; }
+
+/* === NAVBAR TOP === */
+header.navbar:not(.navbar-vertical),
+.navbar.topbar {
+    background-color: #1e2d42 !important;
+    border-bottom   : 1px solid rgba(255,255,255,0.08) !important;
+    box-shadow      : 0 2px 8px rgba(0,0,0,0.2) !important;
+    min-height      : 56px !important;
+    height          : 56px !important;
+}
+
+/* Avatar "CD" → teal CID */
+.navbar .avatar,
+.navbar .avatar-sm,
+header.navbar .avatar,
+[class*="avatar"] {
+    background-color: var(--disp-teal) !important;
+    border-radius   : 8px !important;
+    font-weight     : 700 !important;
+    color           : #ffffff !important;
+    border          : 2px solid rgba(255,255,255,0.20) !important;
+    width           : 34px !important;
+    height          : 34px !important;
+    line-height     : 30px !important;
+    text-align      : center !important;
+    font-size       : 13px !important;
+    transition      : transform var(--disp-transition) !important;
+}
+.navbar .avatar:hover { transform: scale(1.08) !important; }
+
+/* Nom utilisateur navbar */
+.navbar.topbar .user-menu .nav-link > div:first-child,
+.user-menu .nav-link span {
+    font-weight : 600 !important;
+    color       : #ffffff !important;
+}
+.navbar.topbar .text-muted-menu,
+.user-menu .text-muted {
+    font-size    : 11px !important;
+    color        : rgba(255,255,255,0.55) !important;
+    max-width    : 180px !important;
+    overflow     : hidden !important;
+    text-overflow: ellipsis !important;
+    white-space  : nowrap !important;
+}
+
+/* Breadcrumb */
+.navbar .breadcrumb-item a,
+header.navbar .breadcrumb-item a {
+    color          : rgba(255,255,255,0.65) !important;
+    font-size      : 12px !important;
+    background     : rgba(255,255,255,0.08) !important;
+    border-radius  : 12px !important;
+    padding        : 1px 8px !important;
+    text-decoration: none !important;
+}
+.navbar .breadcrumb-item a:hover { color: #ffffff !important; }
+
+/* Search bar */
+header.navbar input[type="search"],
+#search-input {
+    background-color: rgba(255,255,255,0.07) !important;
+    border          : 1px solid rgba(255,255,255,0.14) !important;
+    border-radius   : 10px !important;
+    color           : #ffffff !important;
+    padding         : 0.4rem 1rem !important;
+    transition      : all var(--disp-transition) !important;
+}
+header.navbar input[type="search"]::placeholder,
+#search-input::placeholder { color: rgba(255,255,255,0.40) !important; }
+header.navbar input[type="search"]:focus,
+#search-input:focus {
+    border-color    : var(--disp-teal) !important;
+    box-shadow      : 0 0 0 3px rgba(8,145,178,0.25) !important;
+    background-color: rgba(255,255,255,0.12) !important;
+    outline         : none !important;
+}
+
+/* === ONGLETS VUE === */
+.nav-tabs {
+    background  : var(--disp-white) !important;
+    border-bottom: 2px solid var(--disp-border) !important;
+    padding     : 0 1rem !important;
+    margin-bottom: 1.25rem !important;
+    gap         : 4px !important;
+}
+.nav-tabs .nav-link {
+    color        : var(--disp-muted) !important;
+    border       : none !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 0 !important;
+    padding      : 0.65rem 1rem !important;
+    font-weight  : 500 !important;
+    background   : transparent !important;
+    transition   : color var(--disp-transition),
+                   border-color var(--disp-transition) !important;
+    margin-bottom: -2px !important;
+}
+.nav-tabs .nav-link:hover { color: var(--disp-teal) !important; }
+.nav-tabs .nav-link.active {
+    color        : var(--disp-navy) !important;
+    font-weight  : 700 !important;
+    border-bottom: 2px solid var(--disp-teal) !important;
+    background   : transparent !important;
+}
+
+/* === FOND & LAYOUT === */
+body {
+    font-family     : 'Inter', sans-serif !important;
+    background-color: var(--disp-bg) !important;
+    color           : var(--disp-text) !important;
+    font-size       : 13px !important;
+    line-height     : 1.5 !important;
+}
+.page-wrapper,
+.page-body { background-color: var(--disp-bg) !important; }
+
+/* === SECTIONS TICKETS === */
+.card,
+.ajax-content-loaded .card,
+.tab-content .card {
+    background   : var(--disp-white) !important;
+    border-radius: var(--disp-radius) !important;
+    border       : 1px solid var(--disp-border) !important;
+    box-shadow   : var(--disp-shadow) !important;
+    overflow     : hidden !important;
+    margin-bottom: 1.25rem !important;
+}
+.card:hover {
+    box-shadow: 0 6px 20px rgba(27,58,107,0.12) !important;
+}
+
+/* En-tête sections */
+.card .card-header,
+.ajax-content-loaded .card-header {
+    padding        : 0.875rem 1.25rem !important;
+    border-bottom  : 1px solid var(--disp-border) !important;
+    display        : flex !important;
+    justify-content: space-between !important;
+    align-items    : center !important;
+    font-size      : 11px !important;
+    font-weight    : 700 !important;
+    text-transform : uppercase !important;
+    letter-spacing : 0.7px !important;
+    color          : var(--disp-navy) !important;
+    background     : #f8fafc !important;
+}
+
+/* Sections par couleur — border-top */
+/* "VOS TICKETS EN COURS" */
+.card.tickets-en-cours,
+[id*="mytickets"] .card,
+.central-items-1 .card {
+    border-top: 3px solid var(--disp-en-cours) !important;
+}
+/* "TICKETS À TRAITER" */
+.card.tickets-a-traiter,
+[id*="tosolve"] .card,
+.central-items-3 .card {
+    border-top: 3px solid var(--disp-a-traiter) !important;
+}
+/* "TICKETS EN ATTENTE" */
+.card.tickets-en-attente,
+[id*="waiting"] .card,
+.central-items-2 .card {
+    border-top: 3px solid var(--disp-en-attente) !important;
+}
+
+/* Badge compteur section */
+.card-header .badge,
+.card-header span.badge {
+    border-radius: 20px !important;
+    padding      : 2px 10px !important;
+    font-size    : 11px !important;
+    font-weight  : 700 !important;
+}
+
+/* === TABLEAUX TICKETS === */
+table thead th,
+.table th {
+    font-size     : 10px !important;
+    font-weight   : 700 !important;
+    color         : var(--disp-muted) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    background    : #f8fafc !important;
+    padding       : 0.5rem 0.75rem !important;
+    border-bottom : 1px solid var(--disp-border) !important;
+    white-space   : nowrap !important;
+}
+
+table tbody tr,
+.table tbody tr {
+    border-bottom: 1px solid #f8fafc !important;
+    border-left  : 3px solid transparent !important;
+    transition   : background var(--disp-transition),
+                   border-color var(--disp-transition) !important;
+}
+
+table tbody tr:hover,
+.table tbody tr:hover {
+    background-color : #f0f7ff !important;
+    border-left-color: var(--disp-teal) !important;
+    cursor           : pointer !important;
+}
+
+table tbody td,
+.table td {
+    padding       : 0.7rem 0.75rem !important;
+    vertical-align: middle !important;
+    font-size     : 12px !important;
+    color         : var(--disp-text) !important;
+}
+
+/* Colonne DESCRIPTION — fix texte tronqué */
+table tbody td:last-child,
+.table td.description-col {
+    max-width    : 200px !important;
+    overflow     : hidden !important;
+    text-overflow: ellipsis !important;
+    white-space  : nowrap !important;
+    color        : var(--disp-blue) !important;
+    font-weight  : 600 !important;
+}
+table tbody td:last-child:hover { text-decoration: underline !important; }
+
+/* Colonne DEMANDEUR */
+table tbody td:nth-child(2) {
+    font-size  : 12px !important;
+    font-weight: 500 !important;
+}
+
+/* === BADGES & STATUTS === */
+
+/* Badge ID ticket — remplacer rose par teal */
+td:first-child .badge,
+.badge-id,
+td .badge[class*="bg-"] {
+    background-color: rgba(8,145,178,0.10) !important;
+    color           : var(--disp-teal) !important;
+    border          : 1px solid rgba(8,145,178,0.25) !important;
+    border-radius   : 6px !important;
+    font-weight     : 700 !important;
+    font-size       : 11px !important;
+    padding         : 2px 8px !important;
+    white-space     : nowrap !important;
+}
+
+/* Section "En cours" badge */
+.badge-en-cours    { background:#dbeafe!important; color:#1d4ed8!important; border:none!important; }
+/* Section "À traiter" badge */
+.badge-a-traiter   { background:#fff3ee!important; color:#d4521c!important; border:none!important; }
+/* Section "En attente" badge */
+.badge-en-attente  { background:#ede9fe!important; color:#7c3aed!important; border:none!important; }
+
+/* Badges priorité */
+.badge { border-radius: 20px !important; padding: 2px 8px !important; font-size: 11px !important; font-weight: 600 !important; }
+.priority_5, .priority_6 { background:#fee2e2!important; color:#ef4444!important; }
+.priority_4               { background:#fef3c7!important; color:#d97706!important; }
+.priority_3               { background:#e0f2fe!important; color:#0284c7!important; }
+.priority_1, .priority_2  { background:#f0fdf4!important; color:#16a34a!important; }
+
+/* === NOTES PERSONNELLES === */
+.personal-reminder-empty,
+.ajax-content-loaded .card-body:empty,
+.no-data-placeholder {
+    background   : #fafbff !important;
+    border       : 1px dashed var(--disp-border) !important;
+    border-radius: 8px !important;
+    padding      : 1.5rem !important;
+    text-align   : center !important;
+    color        : var(--disp-muted) !important;
+    font-size    : 12px !important;
+}
+
+/* === GLOBAL & UTILITAIRES === */
+
+/* Modaux */
+.modal-backdrop { z-index: 1050 !important; }
+.modal          { z-index: 1055 !important; position: fixed !important; }
+.modal-content  {
+    background-color: var(--disp-white) !important;
+    border          : 1px solid var(--disp-border) !important;
+    border-radius   : var(--disp-radius) !important;
+    box-shadow      : 0 8px 40px rgba(27,58,107,0.22) !important;
+    transform       : none !important;
+    animation       : none !important;
+}
+.dropdown-menu    { z-index: 1060 !important; border-radius: 10px !important; box-shadow: 0 8px 24px rgba(27,58,107,0.12) !important; }
+.tooltip.show     { z-index: 1070 !important; }
+.select2-dropdown { z-index: 1090 !important; }
+
+/* Boutons "+" */
+.btn-add,
+.card-header .btn,
+.card-header a.btn {
+    color        : var(--disp-teal) !important;
+    border       : 1.5px solid rgba(8,145,178,0.30) !important;
+    border-radius: 6px !important;
+    background   : transparent !important;
+    padding      : 2px 8px !important;
+    font-size    : 12px !important;
+    transition   : all var(--disp-transition) !important;
+}
+.btn-add:hover,
+.card-header .btn:hover {
+    background-color: var(--disp-teal) !important;
+    color           : #ffffff !important;
+    transform       : scale(1.05) !important;
+}
+
+/* Bouton primaire */
+.btn-primary {
+    background-color: var(--disp-navy) !important;
+    border-color    : var(--disp-navy) !important;
+    border-radius   : 8px !important;
+    color           : #ffffff !important;
+    font-weight     : 600 !important;
+    transition      : background var(--disp-transition),
+                      transform var(--disp-transition),
+                      box-shadow var(--disp-transition) !important;
+}
+.btn-primary:hover {
+    background-color: var(--disp-teal) !important;
+    border-color    : var(--disp-teal) !important;
+    transform       : translateY(-1px) !important;
+    box-shadow      : 0 4px 12px rgba(8,145,178,0.30) !important;
+}
+
+/* Liens */
+a { color: var(--disp-blue) !important; }
+a:hover { color: var(--disp-teal) !important; }
+
+/* Formulaires */
+.form-control:focus, input:focus, select:focus, textarea:focus {
+    border-color: var(--disp-teal) !important;
+    box-shadow  : 0 0 0 3px rgba(8,145,178,0.15) !important;
+    outline     : none !important;
+}
+label, .form-label {
+    color         : var(--disp-navy) !important;
+    font-weight   : 600 !important;
+    font-size     : 12px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.4px !important;
+}
+
+/* Alertes */
+.alert         { border-radius: 10px !important; border: none !important; padding: 0.75rem 1rem !important; }
+.alert-info    { background: rgba(8,145,178,0.08)  !important; border-left: 4px solid var(--disp-teal)       !important; }
+.alert-warning { background: rgba(212,82,28,0.08)  !important; border-left: 4px solid var(--disp-a-traiter)  !important; }
+.alert-success { background: rgba(16,185,129,0.08) !important; border-left: 4px solid var(--disp-resolu)     !important; }
+.alert-danger  { background: rgba(239,68,68,0.08)  !important; border-left: 4px solid var(--disp-nouveau)    !important; }
+
+/* Page enter */
+.page-body { animation: disp-enter 0.30s ease forwards !important; }
+@keyframes disp-enter { from { opacity: 0; } to { opacity: 1; } }
+
+/* Transitions globales */
+a, button, .btn, input, select, textarea, .nav-link {
+    transition: background var(--disp-transition),
+                color var(--disp-transition),
+                box-shadow var(--disp-transition),
+                border-color var(--disp-transition) !important;
+}
+
+/* === SCROLLBAR === */
+* { scrollbar-width: thin !important; scrollbar-color: var(--disp-border) transparent !important; }
+::-webkit-scrollbar             { width: 6px !important; height: 4px !important; }
+::-webkit-scrollbar-track       { background: transparent !important; }
+::-webkit-scrollbar-thumb       { background: var(--disp-border) !important; border-radius: 3px !important; }
+::-webkit-scrollbar-thumb:hover { background: var(--disp-teal)   !important; }
+
+/* Supprimer scrollbar horizontale parasite sur sections */
+.ajax-content-loaded,
+.tab-content,
+.card-body { overflow-x: hidden !important; }
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    body { font-size: 12px !important; }
+
+    .card, .search_card { border-radius: 10px !important; }
+    .card-body          { padding: 0.75rem !important; }
+    .card-header        { padding: 0.65rem 0.875rem !important; font-size: 10px !important; }
+
+    /* Colonnes tickets empilées */
+    .central-content .row,
+    .tab-content .row {
+        flex-direction: column !important;
+    }
+    .central-content .row > [class*="col"],
+    .tab-content .row > [class*="col"] {
+        width : 100% !important;
+        max-width: 100% !important;
+    }
+
+    .nav-tabs .nav-link { padding: 0.5rem 0.65rem !important; font-size: 11px !important; }
+
+    table tbody td, .table td { padding: 0.4rem 0.5rem !important; font-size: 11px !important; }
+    table thead th, .table th { font-size: 9px !important; }
+
+    header.navbar:not(.navbar-vertical),
+    .navbar.topbar { height: 50px !important; min-height: 50px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+}
