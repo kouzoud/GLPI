@@ -4,11 +4,12 @@
  * Plugin : monplugin — Charte CID
  *
  * Profils gérés :
- *   ID 4 → Super-Admin   → superadmin.css + effects.js
- *   ID 6 → Technicien    → technicien.css + effects.js
+ *   ID 4 → Super-Admin   → superadmin.css + effects.js + superadmin-central.js
+ *   ID 5 → Dispatcher    → technicien.css + effects.js + superadmin-central.js
+ *   ID 6 → Technicien    → technicien.css + effects.js + superadmin-central.js
  *   ID 1 → Employé       → employe.css + effects.js
  *
- * Login : hook display_login → login.css (injection directe via echo)
+ * Page centrale : profils 4, 5, 6 voient uniquement l'onglet Tableau de bord Metabase
  */
 
 function plugin_monplugin_inject_css()
@@ -26,6 +27,7 @@ function plugin_monplugin_inject_css()
     // Mapping profil → fichier CSS
     $profile_css_map = [
         4 => 'css/superadmin.css',   // Super-Admin
+        5 => 'css/technicien.css',   // Dispatcher  ← ajuster l'ID si nécessaire
         6 => 'css/technicien.css',   // Technicien
         1 => 'css/employe.css',      // Employé / Self-Service
     ];
@@ -42,8 +44,8 @@ function plugin_monplugin_inject_css()
         // position:fixed fonctionne correctement (hors du DOM du formulaire)
         $PLUGIN_HOOKS['add_javascript']['monplugin'][] = 'js/modal-fix.js';
 
-        // Super Admin uniquement — page centrale : affiche seulement Metabase
-        if ($profile_id === 4) {
+        // Super Admin, Dispatcher et Technicien — page centrale : Metabase uniquement
+        if (in_array($profile_id, [4, 5, 6])) {
             $PLUGIN_HOOKS['add_javascript']['monplugin'][] = 'js/superadmin-central.js';
         }
     }

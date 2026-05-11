@@ -1,6 +1,6 @@
 <?php
 // Cache busting — incrémenter à chaque déploiement
-define('PLUGIN_MONPLUGIN_VERSION', '3.5.3');
+define('PLUGIN_MONPLUGIN_VERSION', '3.5.4');
 
 function plugin_init_monplugin()
 {
@@ -20,7 +20,7 @@ function plugin_init_monplugin()
 function plugin_version_monplugin()
 {
     return [
-        'name' => 'Mon Premier Plugin',
+        'name' => 'ITSM-ESM Bridge',
         'version' => PLUGIN_MONPLUGIN_VERSION,
         'author' => 'DevOps',
         'license' => 'GPLv2+',
